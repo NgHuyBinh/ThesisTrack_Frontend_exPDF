@@ -15,5 +15,17 @@ public class StudentService {
         return studentRepository.findByNumberStudent(noStudent);
     }
 
+    public boolean existsById(Integer studentId) {
+        return false;
+    }
+
+    public Student findById(Integer studentId) {
+        return null;
+    }
+
+    // public Student findById(Integer studentId) {
+    //     return null;
+    // }
+
 }
  

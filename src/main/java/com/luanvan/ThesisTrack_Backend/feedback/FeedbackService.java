@@ -1,47 +1,57 @@
 // package com.luanvan.ThesisTrack_Backend.feedback;
 
-// import java.util.ArrayList;
-// import java.util.List;
-
-// import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Service;
 
-// import com.luanvan.ThesisTrack_Backend.semester.Semester;
-// import com.luanvan.ThesisTrack_Backend.semester.SemesterRepository;
 // import com.luanvan.ThesisTrack_Backend.student.Student;
 // import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
+// import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
+// import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
+
+// import jakarta.persistence.EntityNotFoundException;
+
+// import java.util.List;
 
 // @Service
 // public class FeedbackService {
 
-//     private FeedbackRepository feedbackRepository;
-//     private StudentRepository studentRepository;
-//     private SemesterRepository semesterRepository;
 
-//     @Autowired
-//     public FeedbackService(FeedbackRepository roomFeedbackRepository, StudentRepository studentRepository,
-//             SemesterRepository semesterRepository) {
+//     private final FeedbackRepository feedbackRepository;
+//     private final StudentRepository studentRepository;
+//     private final TeacherRepository teacherRepository;
+
+//     public FeedbackService(FeedbackRepository feedbackRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
 //         this.feedbackRepository = feedbackRepository;
 //         this.studentRepository = studentRepository;
-//         this.semesterRepository = semesterRepository;
+//         this.teacherRepository = teacherRepository;
 //     }
 
-//     public List<FeedbackResponseDTO> getFeedbackByStudent(Integer id) {
-//         List<FeedbackResponseDTO> responseDTOs = new ArrayList<>();
-//         if (feedbackRepository.findByStudentId(id).isPresent()) {
-//             List<Feedback> roomFeedbacks = feedbackRepository.findByStudentId(id).get();
-//             for (Feedback r : roomFeedbacks) {
-//                 FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO();
-//                 feedbackResponseDTO.setId(r.getId());
-//                 feedbackResponseDTO.setStatus(r.getStatus());
-//                 feedbackResponseDTO.setSendDate(r.getSendDate());
-//                 responseDTOs.add(feedbackResponseDTO);
-//             }
+//     public void addFeedback(FeedbackResponseDTO feedbackResponseDTO) {
+//         // Kiểm tra sự tồn tại của sinh viên hoặc giảng viên
+//         Integer studentId = feedbackResponseDTO.getStudentId();
+//         Integer teacherId = feedbackResponseDTO.getTeacherId();
+        
+//         Student student = studentRepository.findById(studentId).orElse(null);
+//         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+    
+//         if (student != null || teacher != null) {
+//             // Thêm phản hồi nếu có tồn tại sinh viên hoặc giảng viên
+//             Feedback feedback = new Feedback();
+//             feedback.setStudent(student);
+//             feedback.setTeacher(teacher);
+//             feedback.setSendDate(feedbackResponseDTO.getSendDate());
+//             feedback.setStatus(feedbackResponseDTO.getStatus());
+//             feedback.setNote(feedbackResponseDTO.getNote());
+//             feedbackRepository.save(feedback);
+//         } else {
+//             // Xử lý khi không tìm thấy sinh viên hoặc giảng viên
+//             throw new EntityNotFoundException("Không tìm thấy sinh viên hoặc giảng viên.");
 //         }
-//         return responseDTOs;
 //     }
+    
 
-//     public void addFeedBackFromStudent(Feedback feedback) {
-
+//     public List<FeedbackResponseDTO> getAllFeedbacks() {
+//         // Thêm logic để truy vấn và chuyển đổi phản hồi thành danh sách FeedbackResponseDTO
+//         // Trả về danh sách FeedbackResponseDTO
+//         return null;
 //     }
 // }
