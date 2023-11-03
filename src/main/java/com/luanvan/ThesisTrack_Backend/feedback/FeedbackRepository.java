@@ -1,11 +1,15 @@
 // package com.luanvan.ThesisTrack_Backend.feedback;
 
-// import java.util.*;
-
 // import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.stereotype.Repository;
 
-// @Repository
+// import com.luanvan.ThesisTrack_Backend.student.Student;
+
+// import java.util.List;
+
 // public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
-//     Optional<List<Feedback>> findByStudentId(Integer studentId);
+//     List<Feedback> findByStudentId(Integer studentId);
+
+//     List<Feedback> findByTeacherId(Integer teacherId);
+
+//      List<Feedback> findByStudent(Student student);
 // }

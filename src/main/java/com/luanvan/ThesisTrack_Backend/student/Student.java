@@ -86,6 +86,10 @@ public class Student {
     // thêm vào cho chức năng đăng ký giảng viên hướng dẫn
     private int status;
 
+    // public Student orElse(Object object) {
+    //     return null;
+    // }
+
     // thêm vào cho chức năng chia nhóm sinh viên
 //    @ManyToOne(optional = true)
 //    @JoinColumn(name="groupstudent_id")

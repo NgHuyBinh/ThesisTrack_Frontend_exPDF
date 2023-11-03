@@ -91,5 +91,11 @@ public class TeacherService {
             return false; // Nếu có lỗi
         }
     }
+    public boolean existsById(Integer teacherId) {
+        return false;
+    }
+    public Teacher findById(Integer teacherId) {
+        return null;
+    }
 
 }
