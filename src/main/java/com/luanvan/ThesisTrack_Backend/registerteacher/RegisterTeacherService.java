@@ -40,6 +40,7 @@ public class RegisterTeacherService {
         this.teacherRepository = teacherRepository;
     }
 
+    // đăng ký  sinh viên 
     public void createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
         // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
         boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
@@ -140,6 +141,7 @@ public class RegisterTeacherService {
             RegisterTeacherResponseDTO responseDTO = new RegisterTeacherResponseDTO(
                 registerTeacher.getId(),
                 registerTeacher.getStudent().getId(),
+                registerTeacher.getStudent().getName(),
                 registerTeacher.getTeacher().getId(),
                 registerTeacher.getMark(),
                 registerTeacher.getStatus(),
@@ -165,6 +167,7 @@ public class RegisterTeacherService {
                 .map(registerTeacher -> new RegisterTeacherResponseDTO(
                     registerTeacher.getId(),
                     registerTeacher.getStudent().getId(),
+                    registerTeacher.getStudent().getName(),
                     registerTeacher.getTeacher().getId(),
                     registerTeacher.getMark(),
                     registerTeacher.getStatus(),

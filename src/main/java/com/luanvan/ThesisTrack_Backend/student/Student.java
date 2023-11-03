@@ -86,6 +86,10 @@ public class Student {
     // thêm vào cho chức năng đăng ký giảng viên hướng dẫn
     private int status;
 
+    public Integer getStudentName() {
+        return null;
+    }
+
     // public Student orElse(Object object) {
     //     return null;
     // }

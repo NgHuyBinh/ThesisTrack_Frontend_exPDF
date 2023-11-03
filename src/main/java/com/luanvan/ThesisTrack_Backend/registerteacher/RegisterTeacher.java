@@ -37,8 +37,8 @@ public class RegisterTeacher {
     // private String mark;
     private Float mark;
 
-    private Integer status = 0;
+    private Integer status;
 
-    private String note  = new String();
+    private String note;
 }
 
