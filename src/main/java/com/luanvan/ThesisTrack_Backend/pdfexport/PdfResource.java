@@ -1,21 +1,12 @@
 package com.luanvan.ThesisTrack_Backend.pdfexport;
 
-// import com.bezkoder.spring.security.jwt.entity.DonViThucTap;
-// import com.bezkoder.spring.security.jwt.entity.Khoa;
-// import com.bezkoder.spring.security.jwt.entity.Lop;
-// import com.bezkoder.spring.security.jwt.services.DonViThucTapService;
-// import com.bezkoder.spring.security.jwt.services.KhoaService;
-// import com.bezkoder.spring.security.jwt.services.LopService;
 import com.itextpdf.text.*;
-// import com.itextpdf.text.pdf.BaseFont;
-// import com.itextpdf.text.pdf.PdfPCell;
-// import com.itextpdf.text.pdf.PdfPTable;
-// import com.itextpdf.text.pdf.PdfWriter;
+
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-// import com.luanvan.ThesisTrack_Backend.registertopic.RegisiterResource;
+
 import com.luanvan.ThesisTrack_Backend.registertopic.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -67,19 +58,20 @@ public class PdfResource {
             document.add(title);
 
             // Định dạng nội dung
-            PdfPTable table = new PdfPTable(5);
+            PdfPTable table = new PdfPTable(6);
             table.setWidthPercentage(100);
 
             // Độ rộng tương đối của từng cột (tổng của độ rộng này cần phải bằng 100%)
-            float[] columnWidths = { 0.5f, 2.5f, 2.25f, 2.25f, 2.5f };
+            float[] columnWidths = { 0.5f, 1f, 2f, 2f, 2f, 2.5f };
             table.setWidths(columnWidths);
 
             // Tiêu đề cho từng cột
             PdfPCell cell1 = new PdfPCell(new Phrase("STT", contentFont));
-            PdfPCell cell2 = new PdfPCell(new Phrase("Tên sinh viên", contentFont));
-            PdfPCell cell3 = new PdfPCell(new Phrase("Đề tài sinh viên", contentFont));
-            PdfPCell cell4 = new PdfPCell(new Phrase("Đề tài giảng viên", contentFont));
-            PdfPCell cell5 = new PdfPCell(new Phrase("Tên GVHD", contentFont));
+            PdfPCell cell2 = new PdfPCell(new Phrase("Khoa", contentFont));
+            PdfPCell cell3 = new PdfPCell(new Phrase("Tên sinh viên", contentFont));
+            PdfPCell cell4 = new PdfPCell(new Phrase("Đề tài sinh viên", contentFont));
+            PdfPCell cell5 = new PdfPCell(new Phrase("Đề tài giảng viên", contentFont));
+            PdfPCell cell6 = new PdfPCell(new Phrase("Tên GVHD", contentFont));
 
             // Đặt kích thước và định dạng cho cột
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -87,16 +79,19 @@ public class PdfResource {
             cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell5.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell6.setHorizontalAlignment(Element.ALIGN_CENTER);
 
             table.addCell(cell1);
             table.addCell(cell2);
             table.addCell(cell3);
             table.addCell(cell4);
             table.addCell(cell5);
+            table.addCell(cell6);
 
             // Thêm dữ liệu từ danh sách các đăng ký đề tài
             for (RegisterTopic registerTopic : registerTopics) {
                 PdfPCell cellSTT = new PdfPCell(new Phrase(String.valueOf(registerTopic.getId()), contentFont));
+                PdfPCell cellFaculty = new PdfPCell(new Phrase(registerTopic.getStudent().getFaculty().getCode(), contentFont));
                 PdfPCell cellNameStudent = new PdfPCell(new Phrase(registerTopic.getStudent().getName(), contentFont));
                 PdfPCell cellTopicName = new PdfPCell(new Phrase(registerTopic.getTopicName(), contentFont));
                 PdfPCell cellTopic = new PdfPCell(new Phrase(registerTopic.getTopic().getName(), contentFont));
@@ -104,12 +99,14 @@ public class PdfResource {
                         new Phrase(registerTopic.getTopic().getTeacher().getName(), contentFont));
 
                 cellSTT.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cellFaculty.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cellNameStudent.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cellTopicName.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cellTopic.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cellTeacher.setHorizontalAlignment(Element.ALIGN_CENTER);
 
                 table.addCell(cellSTT);
+                table.addCell(cellFaculty);
                 table.addCell(cellNameStudent);
                 table.addCell(cellTopicName);
                 table.addCell(cellTopic);
@@ -135,7 +132,7 @@ public class PdfResource {
     }
 
     // xuất file kết điểm của tất cả sinh viên
-    
+
 
 
 

@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.luanvan.ThesisTrack_Backend.faculty.Faculty;
+
 @Service
 public class StudentService {
     
@@ -27,5 +29,19 @@ public class StudentService {
     //     return null;
     // }
 
+    public Integer getFacultyIdByStudentId(Integer studentId) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            Faculty faculty = student.getFaculty();
+
+            if (faculty != null) {
+                return faculty.getId();
+            }
+        }
+
+        return null; // Hoặc có thể trả về một giá trị mặc định khác tùy theo yêu cầu của bạn.
+    }
 }
  

@@ -14,6 +14,7 @@ public class RegisterTeacherResource {
     @Autowired
     private RegisterTeacherService registerTeacherService;
 
+    // đăng ký giảng  viên 
     @PostMapping("/add")
     public ResponseEntity<String> createRegisterTeacher(@RequestBody RegisterTeacherResponseDTO request) {
         try {
@@ -52,6 +53,7 @@ public class RegisterTeacherResource {
         return ResponseEntity.ok(registerTeachers);
     }
 
+    // lấy đăng ký sinh viên theo giảng viên 
     @GetMapping("/Teacher/{teacherId}")
     public ResponseEntity<List<RegisterTeacherResponseDTO>> getRegisterTeachersByTeacher(
             @PathVariable Integer teacherId) {
@@ -60,14 +62,14 @@ public class RegisterTeacherResource {
         return ResponseEntity.ok(registerTeachers);
     }
 
-    // cập nhật trạng thái đăng ký cảu sinh viên 
+    // cập nhật trạng thái đăng ký của sinh viên 
     @PatchMapping("/update/{id}")
     public ResponseEntity<Void> updateStatus(@PathVariable Integer id, @RequestBody RegisterTeacherResponseDTO registerTeacher) {
         registerTeacherService.updateStatus(id, registerTeacher);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    // lấy thông tin sinh viên có có giảng viên hướng dẫn có  điều kiện trạng thái  đã đợc duyệt
+    // lấy thông tin sinh viên có có giảng viên hướng dẫn có  điều kiện trạng thái  đã được duyệt
     @GetMapping("/info")
     public ResponseEntity<List<RegisterTeacherInfo>> getRegisterTeacherInfo() {
         List<RegisterTeacherInfo> registerTeacherInfoList = registerTeacherService.findRegisterTeacherInfoByStatus();

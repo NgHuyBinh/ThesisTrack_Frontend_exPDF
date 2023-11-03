@@ -183,7 +183,7 @@ public class RegisterTeacherService {
         registerTeacherRepository.save(r);
     }
 
-    // lấy thông tin sinh viên đã có giảng viên hướng  dẫn
+    // lấy thông tin sinh viên đã có giảng viên hướng  dẫn (để lấy danh sách này chia nhóm sinh viên)
     public List<RegisterTeacherInfo> findRegisterTeacherInfoByStatus() {
         return registerTeacherRepository.findRegisterTeacherInfoByStatus();
     }
