@@ -1,9 +1,9 @@
 package com.luanvan.ThesisTrack_Backend.registerteacher;
 
-import java.util.List;
+// import java.util.List;
 
-import com.luanvan.ThesisTrack_Backend.student.Student;
-import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
+// import com.luanvan.ThesisTrack_Backend.student.Student;
+// import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
 // import com.luanvan.ThesisTrack_Backend.student.Student;
 // import com.luanvan.ThesisTrack_Backend.teacher.Teacher;

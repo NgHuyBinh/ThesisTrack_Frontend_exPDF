@@ -91,10 +91,27 @@ public class PdfResource {
             // Thêm dữ liệu từ danh sách các đăng ký đề tài
             for (RegisterTopic registerTopic : registerTopics) {
                 PdfPCell cellSTT = new PdfPCell(new Phrase(String.valueOf(registerTopic.getId()), contentFont));
-                PdfPCell cellFaculty = new PdfPCell(new Phrase(registerTopic.getStudent().getFaculty().getCode(), contentFont));
+                PdfPCell cellFaculty = new PdfPCell(
+                        new Phrase(registerTopic.getStudent().getFaculty().getCode(), contentFont));
                 PdfPCell cellNameStudent = new PdfPCell(new Phrase(registerTopic.getStudent().getName(), contentFont));
+
                 PdfPCell cellTopicName = new PdfPCell(new Phrase(registerTopic.getTopicName(), contentFont));
                 PdfPCell cellTopic = new PdfPCell(new Phrase(registerTopic.getTopic().getName(), contentFont));
+
+                // // nếu như trong csdl là null thì gán bằng dấu khoảng trắng
+                // PdfPCell cellTopicName = new PdfPCell(new Phrase(
+                // registerTopic.getTopicName() != null ? registerTopic.getTopicName() : " ",
+                // contentFont));
+                // PdfPCell cellTopic = new PdfPCell(new Phrase((registerTopic.getTopic() !=
+                // null && registerTopic.getTopic().getName() != null) ?
+                // registerTopic.getTopic().getName()
+                // : " ", contentFont));
+
+                // PdfPCell cellTopic = new PdfPCell(new
+                // Phrase((registerTopic.getTopic().getId() != null) ?
+                // registerTopic.getTopic().getName()
+                // : " ", contentFont));
+
                 PdfPCell cellTeacher = new PdfPCell(
                         new Phrase(registerTopic.getTopic().getTeacher().getName(), contentFont));
 
@@ -132,11 +149,6 @@ public class PdfResource {
     }
 
     // xuất file kết điểm của tất cả sinh viên
-
-
-
-
-
 
     // xem file trước khi tải về
     // @GetMapping("/registertopic")
