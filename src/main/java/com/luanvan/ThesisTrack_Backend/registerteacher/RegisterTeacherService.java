@@ -1,9 +1,7 @@
 package com.luanvan.ThesisTrack_Backend.registerteacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-// import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 // import org.springframework.web.bind.annotation.PatchMapping;
 // import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +17,8 @@ import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
 // import com.luanvan.ThesisTrack_Backend.topic.Topic;
 import com.luanvan.ThesisTrack_Backend.topic.TopicRepository;
+
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,41 +40,40 @@ public class RegisterTeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    // đăng ký  sinh viên 
+    // đăng ký sinh viên
     public void createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
         // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
         boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
-    
+
         if (isExistingRegistration) {
             throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
         }
-    
+
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
-    
+
         Teacher teacher = teacherRepository.findById(teacherId)
                 .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
-    
+
         if (student.getStatus() == 1) {
             throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác trước đó.");
         }
-    
+
         if (mark == null || mark == 0.0f) {
             throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
         }
-    
+
         RegisterTeacher registerTeacher = new RegisterTeacher();
         registerTeacher.setStudent(student);
         registerTeacher.setTeacher(teacher);
         registerTeacher.setMark(mark);
         registerTeacher.setStatus(0);
-    
+
         registerTeacherRepository.save(registerTeacher);
 
-        
     }
 
-    // cập nhật status sau đăng ký và phê duyệt của giảng viên 
+    // cập nhật status sau đăng ký và phê duyệt của giảng viên
     public void updateStatus(Integer id, RegisterTeacher registerTeacher) {
         RegisterTeacher r = registerTeacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký giảng viên"));
@@ -85,50 +84,53 @@ public class RegisterTeacherService {
         registerTeacherRepository.save(r);
     }
 
-    
-    
-    // public ResponseEntity<String> createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
-    //     // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
-    //     boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
+    // public ResponseEntity<String> createRegisterTeacher(Integer studentId,
+    // Integer teacherId, Float mark) {
+    // // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
+    // boolean isExistingRegistration =
+    // registerTeacherRepository.existsByStudentIdAndTeacherId(studentId,
+    // teacherId);
 
-    //     if (isExistingRegistration) {
-    //         throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
-    //     }
-
-    //     Student student = studentRepository.findById(studentId)
-    //             .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
-
-    //     Teacher teacher = teacherRepository.findById(teacherId)
-    //             .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
-
-    //     if (student.getStatus() == 1) {
-    //         throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác trước đó.");
-    //     }
-
-    //     if (mark == null || mark == 0.0f) {
-    //         throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
-    //     }
-        
-
-    //     RegisterTeacher registerTeacher = new RegisterTeacher();
-    //     registerTeacher.setStudent(student);
-    //     registerTeacher.setTeacher(teacher);
-    //     registerTeacher.setMark(mark);
-    //     registerTeacher.setStatus(0);
-
-    //     registerTeacherRepository.save(registerTeacher);
-
-    //     return ResponseEntity.ok("Thêm đăng ký giảng viên thành công.");
+    // if (isExistingRegistration) {
+    // throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước
+    // đó.");
     // }
 
-    // private RegisterTeacherResponseDTO mapRegisterTeacherToResponseDTO(RegisterTeacher registerTeacher) {
-    //     RegisterTeacherResponseDTO responseDTO = new RegisterTeacherResponseDTO();
-    //     responseDTO.setId(registerTeacher.getId());
-    //     responseDTO.setStudentId(registerTeacher.getStudent().getId());
-    //     responseDTO.setTeacherId(registerTeacher.getTeacher().getId());
-    //     responseDTO.setMark(registerTeacher.getMark());
-    //     responseDTO.setStatus(registerTeacher.getStatus());
-    //     return responseDTO;
+    // Student student = studentRepository.findById(studentId)
+    // .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
+
+    // Teacher teacher = teacherRepository.findById(teacherId)
+    // .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
+
+    // if (student.getStatus() == 1) {
+    // throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác
+    // trước đó.");
+    // }
+
+    // if (mark == null || mark == 0.0f) {
+    // throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
+    // }
+
+    // RegisterTeacher registerTeacher = new RegisterTeacher();
+    // registerTeacher.setStudent(student);
+    // registerTeacher.setTeacher(teacher);
+    // registerTeacher.setMark(mark);
+    // registerTeacher.setStatus(0);
+
+    // registerTeacherRepository.save(registerTeacher);
+
+    // return ResponseEntity.ok("Thêm đăng ký giảng viên thành công.");
+    // }
+
+    // private RegisterTeacherResponseDTO
+    // mapRegisterTeacherToResponseDTO(RegisterTeacher registerTeacher) {
+    // RegisterTeacherResponseDTO responseDTO = new RegisterTeacherResponseDTO();
+    // responseDTO.setId(registerTeacher.getId());
+    // responseDTO.setStudentId(registerTeacher.getStudent().getId());
+    // responseDTO.setTeacherId(registerTeacher.getTeacher().getId());
+    // responseDTO.setMark(registerTeacher.getMark());
+    // responseDTO.setStatus(registerTeacher.getStatus());
+    // return responseDTO;
     // }
 
     public List<RegisterTeacherResponseDTO> getAllRegisterTeachers() {
@@ -139,46 +141,49 @@ public class RegisterTeacherService {
         List<RegisterTeacherResponseDTO> responseDTOs = new ArrayList<>();
         for (RegisterTeacher registerTeacher : registerTeachers) {
             RegisterTeacherResponseDTO responseDTO = new RegisterTeacherResponseDTO(
-                registerTeacher.getId(),
-                registerTeacher.getStudent().getId(),
-                registerTeacher.getStudent().getName(),
-                registerTeacher.getTeacher().getId(),
-                registerTeacher.getMark(),
-                registerTeacher.getStatus(),
-                registerTeacher.getNote()
-            );
+                    registerTeacher.getId(),
+                    registerTeacher.getStudent().getId(),
+                    registerTeacher.getStudent().getNumberStudent(),
+                    registerTeacher.getStudent().getName(),
+                    registerTeacher.getTeacher().getId(),
+                    registerTeacher.getMark(),
+                    registerTeacher.getStatus(),
+                    registerTeacher.getNote());
             responseDTOs.add(responseDTO);
         }
 
         return responseDTOs;
     }
 
-    // public List<RegisterTeacherResponseDTO> getRegisterTeachersByTeacher(Integer teacherId) {
-    //     List<RegisterTeacher> registerTeachers = registerTeacherRepository.findByTeacherId(teacherId);
-    //     return registerTeachers.stream()
-    //             .map(this::mapRegisterTeacherToResponseDTO)
-    //             .collect(Collectors.toList());
+    // public List<RegisterTeacherResponseDTO> getRegisterTeachersByTeacher(Integer
+    // teacherId) {
+    // List<RegisterTeacher> registerTeachers =
+    // registerTeacherRepository.findByTeacherId(teacherId);
+    // return registerTeachers.stream()
+    // .map(this::mapRegisterTeacherToResponseDTO)
+    // .collect(Collectors.toList());
     // }
 
     public List<RegisterTeacherResponseDTO> getRegisterTeachersByTeacher(Integer teacherId) {
         List<RegisterTeacher> registerTeachers = registerTeacherRepository.findByTeacherId(teacherId);
-        
+
         return registerTeachers.stream()
                 .map(registerTeacher -> new RegisterTeacherResponseDTO(
-                    registerTeacher.getId(),
-                    registerTeacher.getStudent().getId(),
-                    registerTeacher.getStudent().getName(),
-                    registerTeacher.getTeacher().getId(),
-                    registerTeacher.getMark(),
-                    registerTeacher.getStatus(),
-                    registerTeacher.getNote()
-                ))
+                        registerTeacher.getId(),
+                        registerTeacher.getStudent().getId(),
+                        registerTeacher.getStudent().getNumberStudent(),
+                        registerTeacher.getStudent().getName(),
+                        registerTeacher.getTeacher().getId(),
+                        registerTeacher.getMark(),
+                        registerTeacher.getStatus(),
+                        registerTeacher.getNote()))
                 .collect(Collectors.toList());
     }
-    
+
     // cập nhật trang thái đăng ký giảng viên của sinh viên.
     public void updateStatus(Integer id, RegisterTeacherResponseDTO registerTeacher) {
-        RegisterTeacher r = registerTeacherRepository.findById(id).orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký giảng viên"));
+        RegisterTeacher r = registerTeacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký giảng viên"));
         if (registerTeacher.getNote() != null) {
             r.setNote(registerTeacher.getNote());
         }
@@ -186,10 +191,13 @@ public class RegisterTeacherService {
         registerTeacherRepository.save(r);
     }
 
-    // lấy thông tin sinh viên đã có giảng viên hướng  dẫn (để lấy danh sách này chia nhóm sinh viên)
+    // lấy thông tin sinh viên đã có giảng viên hướng dẫn (để lấy danh sách này chia
+    // nhóm sinh viên)
     public List<RegisterTeacherInfo> findRegisterTeacherInfoByStatus() {
         return registerTeacherRepository.findRegisterTeacherInfoByStatus();
     }
 
-    
+    public void createRegisterTeacher(@Valid RegisterTeacherResponseDTO registerTeacherResponseDTO) {
+    }
+
 }

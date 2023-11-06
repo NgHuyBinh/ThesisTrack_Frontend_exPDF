@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+
 // import jakarta.validation.Valid;
 import java.util.List;
 
@@ -16,11 +19,14 @@ public class RegisterTeacherResource {
 
     // đăng ký giảng viên
     @PostMapping("/add")
-    public ResponseEntity<String> createRegisterTeacher(@RequestBody RegisterTeacherResponseDTO request) {
+    public ResponseEntity<?> createRegisterTeacher(@Valid @RequestBody RegisterTeacherResponseDTO registerTeacherResponseDTO) {
+        registerTeacherService.createRegisterTeacher(registerTeacherResponseDTO);
+        // return ResponseEntity.status(HttpStatus.CREATED).build();
         try {
-            registerTeacherService.createRegisterTeacher(request.getStudentId(), request.getTeacherId(),
-                    request.getMark());
-            return ResponseEntity.status(HttpStatus.CREATED).body("Thêm đăng ký giảng viên thành công.");
+            registerTeacherService.createRegisterTeacher(registerTeacherResponseDTO.getStudentId(), registerTeacherResponseDTO.getTeacherId(),
+                    registerTeacherResponseDTO.getMark());
+            // return ResponseEntity.status(HttpStatus.CREATED).body("Thêm đăng ký giảng viên thành công.");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -26,8 +26,7 @@ public class RegisterTopic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    //Sinh viên nào đăng 
+    //Sinh viên nào đăng ký
     @NotNull(message = "ID sinh viên không được null")
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -37,6 +36,7 @@ public class RegisterTopic {
     @ManyToOne(optional = true) // Có thể null để cho sinh viên tự đăng ký
     @JoinColumn(name="topic_id")
     private Topic topic;
+
     @ManyToOne
     @JoinColumn(name="semester_id")
     private Semester semester;

@@ -40,8 +40,6 @@ public class TopicResource {
         topicService.deleteTopic(topicId);
         return ResponseEntity.noContent().build();
     }
-
-    
     
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updatedTopic(@PathVariable Integer id, @RequestBody String name){

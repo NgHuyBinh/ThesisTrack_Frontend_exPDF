@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class RegisterTeacherResponseDTO {
     private Integer id;
     private Integer studentId;
+    private String numberStudent;
     private String studentName;
     private Integer teacherId;
     // private Student student;
@@ -26,9 +27,12 @@ public class RegisterTeacherResponseDTO {
     private String note;
 
     // Các setter và getter cho studentId và teacherId
-    // public RegisterTeacherResponseDTO(Student student, Teacher teacher, Float mark, Integer status, String note) {
-    public RegisterTeacherResponseDTO(Integer studentId, String studentName, Integer teacherId, Float mark, Integer status, String note) {
+    // public RegisterTeacherResponseDTO(Student student, Teacher teacher, Float
+    // mark, Integer status, String note) {
+    public RegisterTeacherResponseDTO(Integer studentId, String numberStudent, String studentName, Integer teacherId, Float mark,
+            Integer status, String note) {
         this.studentId = studentId;
+        this.numberStudent = numberStudent;
         this.studentName = studentName;
         this.teacherId = teacherId;
         this.mark = mark;
