@@ -18,6 +18,7 @@ import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
+import com.luanvan.ThesisTrack_Backend.topic.Topic;
 // import com.luanvan.ThesisTrack_Backend.topic.Topic;
 import com.luanvan.ThesisTrack_Backend.topic.TopicRepository;
 
@@ -40,15 +41,16 @@ public class RegisterService {
         this.teacherRepository = teacherRepository;
     }
 
-    public  List<RegisterTopic> getAllRegister() {
+    public List<RegisterTopic> getAllRegister() {
         return registerRepository.findAll();
     }
 
     public void updateStatus(Integer id, RegisterTopic registerTopic) {
-        RegisterTopic r = registerRepository.findById(id).orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký đề tài"));
-        if(registerTopic.getReason() == null) {
+        RegisterTopic r = registerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký đề tài"));
+        if (registerTopic.getReason() == null) {
 
-        r.setReason(registerTopic.getReason());
+            r.setReason(registerTopic.getReason());
         }
         r.setStatus(registerTopic.getStatus());
         registerRepository.save(r);
@@ -76,7 +78,7 @@ public class RegisterService {
     }
 
     public void registerTopic(RegisterTopic registerTopic) {
-//        System.out.println("abc");
+        // System.out.println("abc");
         // Kiểm tra id sinh viên tồn tại không
         Student student = studentRepository.findById(registerTopic.getStudent().getId())
                 .orElseThrow(() -> new NotFoundException("Không tồn tại sinh viên này"));
@@ -109,8 +111,13 @@ public class RegisterService {
                 }
             }
 
+        // registerTopic.getTopic().setId(1);
         }
-
+        // if(registerTopic.getTopic() == null){
+        //     registerTopic.getTopic().setId(1);;
+        // }
+            // registerTopic.getTopic().setId(1);
+            
         registerRepository.save(registerTopic);
     }
 }

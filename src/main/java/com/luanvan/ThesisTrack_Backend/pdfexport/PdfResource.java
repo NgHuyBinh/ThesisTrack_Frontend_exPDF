@@ -95,17 +95,19 @@ public class PdfResource {
                         new Phrase(registerTopic.getStudent().getFaculty().getCode(), contentFont));
                 PdfPCell cellNameStudent = new PdfPCell(new Phrase(registerTopic.getStudent().getName(), contentFont));
 
-                PdfPCell cellTopicName = new PdfPCell(new Phrase(registerTopic.getTopicName(), contentFont));
-                PdfPCell cellTopic = new PdfPCell(new Phrase(registerTopic.getTopic().getName(), contentFont));
+                // PdfPCell cellTopicName = new PdfPCell(new
+                // Phrase(registerTopic.getTopicName(), contentFont));
+                // PdfPCell cellTopic = new PdfPCell(new
+                // Phrase(registerTopic.getTopic().getName(), contentFont));
 
                 // // nếu như trong csdl là null thì gán bằng dấu khoảng trắng
-                // PdfPCell cellTopicName = new PdfPCell(new Phrase(
-                // registerTopic.getTopicName() != null ? registerTopic.getTopicName() : " ",
-                // contentFont));
-                // PdfPCell cellTopic = new PdfPCell(new Phrase((registerTopic.getTopic() !=
-                // null && registerTopic.getTopic().getName() != null) ?
-                // registerTopic.getTopic().getName()
-                // : " ", contentFont));
+                PdfPCell cellTopicName = new PdfPCell(new Phrase(
+                        registerTopic.getTopicName() != null ? registerTopic.getTopicName() : " ",
+                        contentFont));
+                PdfPCell cellTopic = new PdfPCell(
+                        new Phrase((registerTopic.getTopic() != null && registerTopic.getTopic().getName() != null)
+                                ? registerTopic.getTopic().getName()
+                                : " ", contentFont));
 
                 // PdfPCell cellTopic = new PdfPCell(new
                 // Phrase((registerTopic.getTopic().getId() != null) ?

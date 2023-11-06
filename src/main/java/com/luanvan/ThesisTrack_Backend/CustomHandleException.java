@@ -63,8 +63,14 @@ public class CustomHandleException {
     public ResponseEntity<ErrorMessage> handleDuplicateException(DuplicateException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage(ex.getMessage()));
     }
+//     @ExceptionHandler(DuplicateException.class)
+// public ResponseEntity<ErrorMessage> handleDuplicateException(DuplicateException ex) {
+//     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorMessage(ex.getMessage()));
+// }
 
-    // @ExceptionHandler(ForeignKeyNotFoundException.class)
+}
+
+   // @ExceptionHandler(ForeignKeyNotFoundException.class)
     // public ResponseEntity<ErrorMessage>
     // handleForeignKeyNotFoundException(ForeignKeyNotFoundException ex) {
     // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
@@ -104,4 +110,3 @@ public class CustomHandleException {
     // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
     // ErrorMessage(ex.getMessage()));
     // }
-}

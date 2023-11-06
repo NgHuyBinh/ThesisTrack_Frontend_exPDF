@@ -8,10 +8,10 @@
 
  @Repository
  public interface TeachingScheduleRepository extends JpaRepository<TeachingSchedule, Integer> {
-  boolean existsByGroupStudentIdAndRoomAndWeekAndThuAndDayAndPeriod(
-          Integer groupStudentId, String room, Integer week, String thu, LocalDate day, String period);
+//   boolean existsByGroupStudentIdAndRoomAndWeekAndThuAndDayAndPeriod(
+        //   Integer groupStudentId, String room, Integer week, String thu, LocalDate day, String period);
 
   List<TeachingSchedule> findByGroupStudentId(Integer groupStudentId);
 
-  List<TeachingSchedule> findByGroupStudentIdAndRoomAndThuAndDay(Integer id, String room, String thu, LocalDate day);
+//   List<TeachingSchedule> findByGroupStudentIdAndRoomAndThuAndDay(Integer id, String room, String thu, LocalDate day);
  }
