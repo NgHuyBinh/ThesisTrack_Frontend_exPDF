@@ -2,6 +2,7 @@ package com.luanvan.ThesisTrack_Backend.calender;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,5 @@ public interface CalenderRepository extends JpaRepository <Calender, Integer> {
     List<Calender> findByWeek(Integer week);
     List<Calender> findByThu(String thu);
     List<Calender> findByDay(LocalDate day);
+    Optional<Calender> findById(Integer id);
 }

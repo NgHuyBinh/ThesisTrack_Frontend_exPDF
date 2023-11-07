@@ -22,6 +22,11 @@ public class CalenderService {
     public List<Calender> getAllCalendarItems() {
         return calenderRepository.findAll();
     }
+    // lấy thông tin theo id 
+    public Calender getCalendarItemById(Integer id) {
+        return calenderRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy lịch với ID: " + id));
+    }
 
     public List<Calender> getCalendarItemsByRoom(String room) {
         return calenderRepository.findByRoom(room);

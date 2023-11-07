@@ -47,6 +47,13 @@ public class CalenderResource {
         return calenderService.getCalendarItemsByDay(day);
     }
 
+    // lấy thông tin theo id 
+    @GetMapping("/{itemId}")
+    public ResponseEntity<Calender> getCalendarItemById(@PathVariable Integer itemId) {
+        Calender calendar = calenderService.getCalendarItemById(itemId);
+        return ResponseEntity.ok(calendar);
+    }
+
 
     @PostMapping("/add")
     public ResponseEntity<?> createCalendarItem(@Valid @RequestBody Calender calendar) {
