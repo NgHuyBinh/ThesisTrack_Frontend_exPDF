@@ -24,6 +24,9 @@ public class CalenderResponseDTO {
     private String period;
 
     private String note;
+
+    private boolean updateSuccess; // Trường để chỉ kết quả cập nhật
+    private String updateMessage;   // Trường để chứa thông điệp kết quả cập nhật
     
 }
     

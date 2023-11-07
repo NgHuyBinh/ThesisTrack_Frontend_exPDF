@@ -47,13 +47,12 @@ public class CalenderResource {
         return calenderService.getCalendarItemsByDay(day);
     }
 
-    // lấy thông tin theo id 
+    // lấy thông tin theo id
     @GetMapping("/{itemId}")
     public ResponseEntity<Calender> getCalendarItemById(@PathVariable Integer itemId) {
         Calender calendar = calenderService.getCalendarItemById(itemId);
         return ResponseEntity.ok(calendar);
     }
-
 
     @PostMapping("/add")
     public ResponseEntity<?> createCalendarItem(@Valid @RequestBody Calender calendar) {
@@ -68,12 +67,12 @@ public class CalenderResource {
     }
 
     // chỉnh sửa lại lịch
-    @PutMapping("/update/{itemId}")
-    public ResponseEntity<Calender> updateCalendarItem(
+    @PatchMapping("/update/{itemId}")
+    public ResponseEntity<String> updateCalendarItem(
             @PathVariable Integer itemId,
             @RequestBody Calender updatedCalendar) {
-        Calender updatedItem = calenderService.updateCalendarItem(itemId, updatedCalendar);
-        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+        calenderService.updateCalendarItem(itemId, updatedCalendar);
+        return new ResponseEntity<>("Cập nhật thành công", HttpStatus.OK);
     }
 
 }

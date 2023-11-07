@@ -70,18 +70,19 @@ public class CalenderService {
     }
 
     // chỉnh sửa lại lịch
-    public Calender updateCalendarItem(Integer itemId, Calender updatedCalendar) {
+    public void updateCalendarItem(Integer itemId, Calender updatedCalendar) {
         // kiểm tra có tồn tại lịch này trước đó hay không
         Calender existingCalendar = calenderRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy lịch này"));
 
         // kiểm tra trùng lập thông tin nhập vào
         List<Calender> duplicates = findDuplicateCalendarItems(
-                updatedCalendar.getWeek(),
-                updatedCalendar.getThu(),
-                updatedCalendar.getDay(),
-                updatedCalendar.getRoom(),
-                updatedCalendar.getPeriod());
+            updatedCalendar.getWeek(),
+            updatedCalendar.getThu(),
+            updatedCalendar.getDay(),
+            updatedCalendar.getRoom(),
+            updatedCalendar.getPeriod()
+        );
 
         // xử lý trùng lập
         duplicates.remove(existingCalendar);
@@ -98,7 +99,6 @@ public class CalenderService {
         existingCalendar.setPeriod(updatedCalendar.getPeriod());
         existingCalendar.setNote(updatedCalendar.getNote());
 
-        return calenderRepository.save(existingCalendar);
+        calenderRepository.save(existingCalendar);
     }
-
 }
