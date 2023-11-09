@@ -1,15 +1,27 @@
-package com.luanvan.ThesisTrack_Backend.semester;
+// package com.luanvan.ThesisTrack_Backend.semester;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 
-public class SemesterResponseDTO {
-    private Integer id;
+// public class SemesterResponseDTO {
+//     private Integer id;
 
-    private String schoolYear;
+//     private String schoolYear;
 
-    private Integer semester;
+//     private Integer semesterNumber;
 
-    private LocalDate startDate;
+//     private LocalDate startDate;
 
-    private LocalDate endDate;
-}
+//     private LocalDate endDate;
+
+//     // public void setSchoolYear(String schoolYear2) {
+//     // }
+
+//     // public void setSemester(Integer semester2) {
+//     // }
+
+// //     public void setSchoolYear(String schoolYear2) {
+// //     }
+
+// //     public void setSemester(Integer semester2) {
+// //     }
+// }

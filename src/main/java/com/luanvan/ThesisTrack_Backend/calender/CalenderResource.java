@@ -22,7 +22,7 @@ public class CalenderResource {
         this.calenderService = calenderService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Calender> getAllCalendarItems() {
         return calenderService.getAllCalendarItems();
     }

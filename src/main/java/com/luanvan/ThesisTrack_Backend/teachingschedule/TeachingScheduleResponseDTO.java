@@ -1,30 +1,70 @@
- package com.luanvan.ThesisTrack_Backend.teachingschedule;
+package com.luanvan.ThesisTrack_Backend.teachingschedule;
 
- import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudent;
- 
- import com.luanvan.ThesisTrack_Backend.calender.Calender;
- import com.luanvan.ThesisTrack_Backend.semester.Semester;
- import com.luanvan.ThesisTrack_Backend.supervisor.Supervisor;
- import lombok.AllArgsConstructor;
- import lombok.Data;
- import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
- import java.time.LocalDate;
-// import java.util.Calendar;
+// import com.luanvan.ThesisTrack_Backend.semester.Semester;    
 
- @Data
- @NoArgsConstructor
- @AllArgsConstructor
- public class TeachingScheduleResponseDTO {
-  private Integer id;
-  // private String room;
-  // private Integer week;
-  // private String thu;
-  // private LocalDate day;
-  // private String period;
-  private Calender calendar;
-  private Semester semester;
-  private GroupStudent groupStudent;
-//  private Supervisor supervisor;
- }
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TeachingScheduleResponseDTO {
+
+    private Integer id;
+    
+    private Integer calender;
+    
+    private Integer semester;
+
+    private Integer groupStudent;
+
+    private Integer status = 0;
+
+    // hiển thị thông tin của lịch
+    private String room;
+
+    private Integer week;
+
+    private String thu;
+
+    private LocalDate day;
+
+    private String period;
+
+    private String note;
+
+    // hiển thị thông tin của bảng học kỳ
+    private String schoolYear;
+
+    private Integer semester_number;
+
+    // nhóm sinh viên
+    private String code;
+    private String name;
+
+    // public void setSemester(Integer id2) {
+    // }
+
+    public TeachingScheduleResponseDTO(Integer integer, String room, Integer week,
+            String thu, LocalDate day, 
+            String period, String note,
+            String schoolYear, Integer semester_number,
+            String code, String name, String string2, Integer integer2) {
+        this.room = room;
+        this.week = week;
+        this.thu = thu;
+        this.day = day;
+        this.period = period;
+        this.note = note;
+        this.schoolYear = schoolYear;
+        this.semester_number = semester_number;
+        this.code = code;
+        this.name = name;
+
+    }
+
+}
 

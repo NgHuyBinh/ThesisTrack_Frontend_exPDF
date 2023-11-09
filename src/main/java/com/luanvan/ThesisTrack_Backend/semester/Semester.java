@@ -28,10 +28,33 @@ public class Semester {
     private String schoolYear;
 
     @NotNull(message = "Không để trống học kỳ")
-    private Integer semester; 
+    private Integer semesterNumber; 
 
     @NotNull(message = "Không để trống ngày bắt đầu")
     private LocalDate startDate;
+
     @NotNull(message = "Không để trống ngày kết thúc")
     private LocalDate endDate;
+
+    // thêm vào sau
+
+    // public Integer getId() {
+    //     return id;
+    // }
+
+    // public String getSchoolYear() {
+    //     return schoolYear;
+    // }
+
+    // public Integer getSemesterNumber() {
+    //     return semesterNumber;
+    // }
+
+    // public LocalDate getStartDate() {
+    //     return startDate;
+    // }
+
+    // public LocalDate getEndDate() {
+    //     return endDate;
+    // }
 }

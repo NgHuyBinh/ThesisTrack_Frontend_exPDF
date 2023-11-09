@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class CalenderResponseDTO {
     private Integer id;
    
-    private String Room;
+    private String room;
 
     private Integer week;
 

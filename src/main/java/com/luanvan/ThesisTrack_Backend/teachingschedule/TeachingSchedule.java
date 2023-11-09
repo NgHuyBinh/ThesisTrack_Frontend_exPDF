@@ -13,14 +13,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+// @ToString
+// @Builder
 // lịch báo cáo luận văn
 public class TeachingSchedule {
     @Id
@@ -31,6 +35,7 @@ public class TeachingSchedule {
     @JoinColumn(name = "calender_id")
     private Calender calender;
     // học kỳ
+
     @ManyToOne
     @JoinColumn(name = "semester_id")
     private Semester semester;
@@ -38,25 +43,8 @@ public class TeachingSchedule {
     @ManyToOne
     @JoinColumn(name = "groupStudent_id")
     private GroupStudent groupStudent;
+
+    private Integer status = 0 ;
+
+
 }
-    // @ManyToOne
-    // @JoinColumn(name = "supervisor_id")
-    // private Supervisor supervisor;
-
-    // // phòng
-    // private String room;
-
-    // // tuần
-    // private Integer week;
-
-    // // thứ mấy trong tuần
-    // private String thu;
-
-    // // ngày nào
-
-    // // @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
-    // private LocalDate day;
-
-    // // buổi sáng hay chiều
-    // private String period;
-
