@@ -47,13 +47,13 @@ public class TeachingScheduleResource {
         }
     }
 
-    // @GetMapping("/groupstudent/{groupStudentId}")
-    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByGroupStudent(
-    //         @PathVariable Integer groupStudentId) {
-    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
-    //             .getTeachingSchedulesByGroupStudent(groupStudentId);
-    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
-    // }
+    @GetMapping("/groupstudent/{groupStudentId}")
+    public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByGroupStudent(
+            @PathVariable Integer groupStudentId) {
+        List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
+                .getAllTeachingSchedulesByGroupStudent(groupStudentId);
+        return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    }
 
     // @GetMapping("/calender/{calenderId}")
     // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByCalender(

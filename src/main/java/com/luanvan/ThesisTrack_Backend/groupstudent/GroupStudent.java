@@ -45,7 +45,7 @@ public class GroupStudent {
 
     // kết nối với với lịch báo cáo
 //    @ManyToOne
-//    @JoinColumn(name="teachingSchedule_id")
+//    @JoinColumn(name="teachingSchedule_   id")
 //    private TeachingSchedule teachingSchedule;
 
 }

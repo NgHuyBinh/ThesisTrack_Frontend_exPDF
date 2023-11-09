@@ -2,7 +2,7 @@ package com.luanvan.ThesisTrack_Backend.teachingschedule;
 
 import java.time.LocalDate;
 
-// import com.luanvan.ThesisTrack_Backend.semester.Semester;    
+import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class TeachingScheduleResponseDTO {
 
     private Integer id;
-    
+
     private Integer calender;
-    
+
     private Integer semester;
 
     private Integer groupStudent;
@@ -44,15 +44,19 @@ public class TeachingScheduleResponseDTO {
     // nhóm sinh viên
     private String code;
     private String name;
+    private Integer teacherId;
 
     // public void setSemester(Integer id2) {
     // }
 
-    public TeachingScheduleResponseDTO(Integer integer, String room, Integer week,
-            String thu, LocalDate day, 
+    public TeachingScheduleResponseDTO(Integer integer,
+            String room, Integer week,
+            String thu, LocalDate day,
             String period, String note,
             String schoolYear, Integer semester_number,
-            String code, String name, String string2, Integer integer2) {
+            Integer teacherId,
+            String code, String name,
+            String string2, Integer integer2) {
         this.room = room;
         this.week = week;
         this.thu = thu;
@@ -61,10 +65,19 @@ public class TeachingScheduleResponseDTO {
         this.note = note;
         this.schoolYear = schoolYear;
         this.semester_number = semester_number;
+        this.teacherId = teacherId;
         this.code = code;
         this.name = name;
 
     }
 
-}
+    public void setTeacher_id(Teacher teacher) {
+    }
 
+    public void teacherId(Integer id2) {
+    }
+
+    // public void setTeacher_id(Integer id2) {
+    // }
+
+}
