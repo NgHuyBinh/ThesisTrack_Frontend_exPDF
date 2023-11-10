@@ -1,8 +1,6 @@
 package com.luanvan.ThesisTrack_Backend.groupstudent;
 
-import com.luanvan.ThesisTrack_Backend.supervisor.Supervisor;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
-import com.luanvan.ThesisTrack_Backend.teachingschedule.TeachingSchedule;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +33,7 @@ public class GroupStudent {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+}
     // chỗ này có thể kết nối với bảng sinh viên viên không hay sinh viên kết nối với bảng này để thông báo lịch cho sinh viên 
     // hội đồng báo cáo, thêm rồi có thể chỉnh sửa được thay thế giảng viên khác được khi cần thiết khi có sự cố thay đổi lịch của giảng viên
 //    @ManyToOne
@@ -48,4 +47,3 @@ public class GroupStudent {
 //    @JoinColumn(name="teachingSchedule_   id")
 //    private TeachingSchedule teachingSchedule;
 
-}

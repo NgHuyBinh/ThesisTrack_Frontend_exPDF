@@ -11,6 +11,7 @@ import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudentRepository;
 import com.luanvan.ThesisTrack_Backend.semester.Semester;
 
 import com.luanvan.ThesisTrack_Backend.semester.SemesterRepository;
+import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,121 @@ public class TeachingScheduleService {
 
         return responseDTOs;
     }
+
+    // lấy thông tin theo id giảng viên
+    public List<TeachingScheduleResponseDTO> getTeachingScheduleByTeacherId(Integer teacherId) {
+        List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findTeachingScheduleByTeacherId(teacherId);
+
+        if (teachingSchedules.isEmpty()) {
+            throw new NotFoundException("Không tìm thấy lịch giảng dạy cho giáo viên có ID: " + teacherId);
+        }
+
+        return teachingSchedules.stream()
+                .map(this::mapTeachingScheduleToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private TeachingScheduleResponseDTO mapTeachingScheduleToDTO(TeachingSchedule teachingSchedule) {
+            TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+            responseDTO.setId(teachingSchedule.getId());
+            responseDTO.setCalender(teachingSchedule.getCalender().getId());
+            responseDTO.setSemester(teachingSchedule.getSemester().getId());
+            responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+            responseDTO.setStatus(teachingSchedule.getStatus());
+
+            responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+            responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+            responseDTO.setThu(teachingSchedule.getCalender().getThu());
+            responseDTO.setDay(teachingSchedule.getCalender().getDay());
+            responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+            responseDTO.setNote(teachingSchedule.getCalender().getNote());
+
+            responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+
+            responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+            responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+            responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
+        return responseDTO;
+    }
+    
+
+    // public List<TeachingScheduleResponseDTO> getTeachingScheduleByTeacherId(Integer teacherId) {
+    //     List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findTeachingScheduleByTeacherId(teacherId)
+    //             .orElseThrow(() -> new NotFoundException("Không tìm thấy lịch giảng dạy cho giáo viên có ID " + teacherId));
+    
+    //     return teachingSchedules.stream()
+    //             .map(teachingSchedule -> {
+    //                 TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+    
+    //                 responseDTO.setId(teachingSchedule.getId());
+    //                 responseDTO.setCalender(teachingSchedule.getCalender().getId());
+    //                 responseDTO.setSemester(teachingSchedule.getSemester().getId());
+    //                 responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+    //                 responseDTO.setStatus(teachingSchedule.getStatus());
+    
+    //                 responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+    //                 responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+    //                 responseDTO.setThu(teachingSchedule.getCalender().getThu());
+    //                 responseDTO.setDay(teachingSchedule.getCalender().getDay());
+    //                 responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+    //                 responseDTO.setNote(teachingSchedule.getCalender().getNote());
+    
+    //                 responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+    //                 responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+    
+    //                 responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+    //                 responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+    //                 responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
+    
+    //                 return responseDTO;
+    //             })
+    //             .collect(Collectors.toList());
+    // }
+    
+
+
+    // lấy thông tin theo id giảng viên
+    // private TeachingScheduleResponseDTO createResponseDTO(TeachingSchedule teachingSchedule) {
+    //     TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+    //     responseDTO.setId(teachingSchedule.getId());
+    //     responseDTO.setCalender(teachingSchedule.getCalender().getId());
+
+    //     if (teachingSchedule.getSemester() != null) {
+    //         responseDTO.setSemester(teachingSchedule.getSemester().getId());
+    //         responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+    //         responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+    //     }
+
+    //     responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+    //     responseDTO.setStatus(teachingSchedule.getStatus());
+
+    //     responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+    //     responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+    //     responseDTO.setThu(teachingSchedule.getCalender().getThu());
+    //     responseDTO.setDay(teachingSchedule.getCalender().getDay());
+    //     responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+    //     responseDTO.setNote(teachingSchedule.getCalender().getNote());
+
+    //     responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+    //     responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+    //     responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getTeacher().getId());
+
+    //     return responseDTO;
+    // }
+    // public List<TeachingScheduleResponseDTO> getAllTeachingSchedulesByTeacherId(Integer teacherId) {
+    //     List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findByGroupStudent_Teacher_Id(teacherId);
+
+    //     List<TeachingScheduleResponseDTO> responseDTOs = new ArrayList<>();
+    //     for (TeachingSchedule teachingSchedule : teachingSchedules) {
+    //         TeachingScheduleResponseDTO responseDTO = createResponseDTO(teachingSchedule);
+    //         responseDTOs.add(responseDTO);
+    //     }
+
+    //     return responseDTOs;
+    // }
+
+
 
     // hàm thêm lịch cho nhóm sinh viên
     public void addTeachingSchedule(TeachingScheduleResponseDTO requestDTO) throws InvalidValueException {

@@ -55,6 +55,22 @@ public class TeachingScheduleResource {
         return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
     }
 
+    @GetMapping("/teacher/{teacherId}")
+        public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingScheduleByTeacherId(
+                @PathVariable Integer teacherId){
+        List<TeachingScheduleResponseDTO> teachingSchedule = teachingScheduleService
+                .getTeachingScheduleByTeacherId(teacherId);
+        return new ResponseEntity<>(teachingSchedule, HttpStatus.OK);
+    }
+
+    // lấy thông tin theo id giảng viên
+    // @GetMapping("/teacher/{teacherId}")
+    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByTeacherId(
+    //         @PathVariable Integer teacherId) {
+    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
+    //             .getAllTeachingSchedulesByTeacherId(teacherId);
+    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    // }
     // @GetMapping("/calender/{calenderId}")
     // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByCalender(
     //         @PathVariable Integer calenderId) {
