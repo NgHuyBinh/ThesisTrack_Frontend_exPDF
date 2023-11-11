@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
+import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 
 import java.util.List;
 
@@ -56,35 +57,49 @@ public class TeachingScheduleResource {
     }
 
     @GetMapping("/teacher/{teacherId}")
-        public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingScheduleByTeacherId(
-                @PathVariable Integer teacherId){
+    public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingScheduleByTeacherId(
+            @PathVariable Integer teacherId) {
         List<TeachingScheduleResponseDTO> teachingSchedule = teachingScheduleService
                 .getTeachingScheduleByTeacherId(teacherId);
         return new ResponseEntity<>(teachingSchedule, HttpStatus.OK);
     }
 
+    // chỉnh sửa lịch báo cáo của nhóm sinh viên 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> updateTeachingSchedule(@PathVariable Integer id, @RequestBody TeachingScheduleResponseDTO requestDTO) {
+        try {
+            teachingScheduleService.updateTeachingScheduleById(id, requestDTO);
+            return new ResponseEntity<>("Lịch báo cáo được cập nhật thành công.", HttpStatus.OK);
+        } catch (InvalidValueException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // lấy thông tin theo id giảng viên
     // @GetMapping("/teacher/{teacherId}")
-    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByTeacherId(
-    //         @PathVariable Integer teacherId) {
-    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
-    //             .getAllTeachingSchedulesByTeacherId(teacherId);
-    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    // public ResponseEntity<List<TeachingScheduleResponseDTO>>
+    // getTeachingSchedulesByTeacherId(
+    // @PathVariable Integer teacherId) {
+    // List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
+    // .getAllTeachingSchedulesByTeacherId(teacherId);
+    // return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
     // }
     // @GetMapping("/calender/{calenderId}")
-    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByCalender(
-    //         @PathVariable Integer calenderId) {
-    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
-    //             .getTeachingSchedulesByCalender(calenderId);
-    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    // public ResponseEntity<List<TeachingScheduleResponseDTO>>
+    // getTeachingSchedulesByCalender(
+    // @PathVariable Integer calenderId) {
+    // List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
+    // .getTeachingSchedulesByCalender(calenderId);
+    // return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
     // }
 
     // @GetMapping("/semester/{semesterId}")
-    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesBySemester(
-    //         @PathVariable Integer semesterId) {
-    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
-    //             .getTeachingSchedulesBySemester(semesterId);
-    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    // public ResponseEntity<List<TeachingScheduleResponseDTO>>
+    // getTeachingSchedulesBySemester(
+    // @PathVariable Integer semesterId) {
+    // List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService
+    // .getTeachingSchedulesBySemester(semesterId);
+    // return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
     // }
 
 }

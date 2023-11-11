@@ -1,16 +1,21 @@
 package com.luanvan.ThesisTrack_Backend.teachingschedule;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luanvan.ThesisTrack_Backend.calender.Calender;
 import com.luanvan.ThesisTrack_Backend.calender.CalenderRepository;
+import com.luanvan.ThesisTrack_Backend.exception.AlreadyExistsException;
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
 import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudent;
 import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudentRepository;
 import com.luanvan.ThesisTrack_Backend.semester.Semester;
 
 import com.luanvan.ThesisTrack_Backend.semester.SemesterRepository;
+
+import jakarta.transaction.Transactional;
+
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 
 import java.util.ArrayList;
@@ -140,10 +145,13 @@ public class TeachingScheduleService {
 
     // lấy thông tin theo id giảng viên
     public List<TeachingScheduleResponseDTO> getTeachingScheduleByTeacherId(Integer teacherId) {
-        List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findTeachingScheduleByTeacherId(teacherId);
+        List<TeachingSchedule> teachingSchedules = teachingScheduleRepository
+                .findTeachingScheduleByTeacherId(teacherId);
 
         if (teachingSchedules.isEmpty()) {
-            throw new NotFoundException("Không tìm thấy lịch giảng dạy cho giáo viên có ID: " + teacherId);
+            // throw new NotFoundException("Không tìm thấy lịch giảng dạy cho giáo viên có
+            // ID: " + teacherId);
+            throw new AlreadyExistsException("Không tìm thấy lịch giảng dạy của giảng viên có id là: " + teacherId);
         }
 
         return teachingSchedules.stream()
@@ -152,106 +160,134 @@ public class TeachingScheduleService {
     }
 
     private TeachingScheduleResponseDTO mapTeachingScheduleToDTO(TeachingSchedule teachingSchedule) {
-            TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
-            responseDTO.setId(teachingSchedule.getId());
-            responseDTO.setCalender(teachingSchedule.getCalender().getId());
-            responseDTO.setSemester(teachingSchedule.getSemester().getId());
-            responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
-            responseDTO.setStatus(teachingSchedule.getStatus());
+        TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+        responseDTO.setId(teachingSchedule.getId());
+        responseDTO.setCalender(teachingSchedule.getCalender().getId());
+        responseDTO.setSemester(teachingSchedule.getSemester().getId());
+        responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+        responseDTO.setStatus(teachingSchedule.getStatus());
 
-            responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
-            responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
-            responseDTO.setThu(teachingSchedule.getCalender().getThu());
-            responseDTO.setDay(teachingSchedule.getCalender().getDay());
-            responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
-            responseDTO.setNote(teachingSchedule.getCalender().getNote());
+        responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+        responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+        responseDTO.setThu(teachingSchedule.getCalender().getThu());
+        responseDTO.setDay(teachingSchedule.getCalender().getDay());
+        responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+        responseDTO.setNote(teachingSchedule.getCalender().getNote());
 
-            responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+        responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+        responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
 
-            responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
-            responseDTO.setName(teachingSchedule.getGroupStudent().getName());
-            responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
+        responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+        responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+        responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
         return responseDTO;
     }
-    
 
-    // public List<TeachingScheduleResponseDTO> getTeachingScheduleByTeacherId(Integer teacherId) {
-    //     List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findTeachingScheduleByTeacherId(teacherId)
-    //             .orElseThrow(() -> new NotFoundException("Không tìm thấy lịch giảng dạy cho giáo viên có ID " + teacherId));
-    
-    //     return teachingSchedules.stream()
-    //             .map(teachingSchedule -> {
-    //                 TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
-    
-    //                 responseDTO.setId(teachingSchedule.getId());
-    //                 responseDTO.setCalender(teachingSchedule.getCalender().getId());
-    //                 responseDTO.setSemester(teachingSchedule.getSemester().getId());
-    //                 responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
-    //                 responseDTO.setStatus(teachingSchedule.getStatus());
-    
-    //                 responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
-    //                 responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
-    //                 responseDTO.setThu(teachingSchedule.getCalender().getThu());
-    //                 responseDTO.setDay(teachingSchedule.getCalender().getDay());
-    //                 responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
-    //                 responseDTO.setNote(teachingSchedule.getCalender().getNote());
-    
-    //                 responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-    //                 responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
-    
-    //                 responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
-    //                 responseDTO.setName(teachingSchedule.getGroupStudent().getName());
-    //                 responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
-    
-    //                 return responseDTO;
-    //             })
-    //             .collect(Collectors.toList());
+    // hàm chỉnh sửa lịch báo cáo cho nhóm sinh viên
+    public void updateTeachingScheduleById(Integer id, TeachingScheduleResponseDTO requestDTO)
+            throws InvalidValueException {
+        // Lấy thông tin lịch giảng dạy từ ID
+        TeachingSchedule existingTeachingSchedule = teachingScheduleRepository.findById(id)
+                .orElseThrow(() -> new AlreadyExistsException("Không tìm thấy lịch báo cáo có ID: " + id));
+
+        // Kiểm tra xem calender đã tồn tại trong các lịch giảng dạy khác chưa
+        // if (teachingScheduleRepository.existsByCalenderAndIdNot(requestDTO.getCalender(), id)) {
+        //     throw new InvalidValueException("Calender này đã được sử dụng trong lịch giảng dạy khác.");
+        // }
+
+        // Cập nhật các trường dữ liệu khác mà không thay đổi ID
+        existingTeachingSchedule.setCalender(calenderRepository.findById(requestDTO.getCalender())
+                .orElseThrow(() -> new NotFoundException("Calender không tồn tại")));
+        existingTeachingSchedule.setSemester(semesterRepository.findById(requestDTO.getSemester())
+                .orElseThrow(() -> new NotFoundException("Semester không tồn tại")));
+        existingTeachingSchedule.setGroupStudent(groupStudentRepository.findById(requestDTO.getGroupStudent())
+                .orElseThrow(() -> new NotFoundException("GroupStudent không tồn tại")));
+
+        // Các cập nhật khác...
+
+        // Lưu thay đổi
+        teachingScheduleRepository.save(existingTeachingSchedule);
+    }
+
+    // public List<TeachingScheduleResponseDTO>
+    // getTeachingScheduleByTeacherId(Integer teacherId) {
+    // List<TeachingSchedule> teachingSchedules =
+    // teachingScheduleRepository.findTeachingScheduleByTeacherId(teacherId)
+    // .orElseThrow(() -> new NotFoundException("Không tìm thấy lịch giảng dạy cho
+    // giáo viên có ID " + teacherId));
+
+    // return teachingSchedules.stream()
+    // .map(teachingSchedule -> {
+    // TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+
+    // responseDTO.setId(teachingSchedule.getId());
+    // responseDTO.setCalender(teachingSchedule.getCalender().getId());
+    // responseDTO.setSemester(teachingSchedule.getSemester().getId());
+    // responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+    // responseDTO.setStatus(teachingSchedule.getStatus());
+
+    // responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+    // responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+    // responseDTO.setThu(teachingSchedule.getCalender().getThu());
+    // responseDTO.setDay(teachingSchedule.getCalender().getDay());
+    // responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+    // responseDTO.setNote(teachingSchedule.getCalender().getNote());
+
+    // responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+    // responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+
+    // responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+    // responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+    // responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getId());
+
+    // return responseDTO;
+    // })
+    // .collect(Collectors.toList());
     // }
-    
-
 
     // lấy thông tin theo id giảng viên
-    // private TeachingScheduleResponseDTO createResponseDTO(TeachingSchedule teachingSchedule) {
-    //     TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
-    //     responseDTO.setId(teachingSchedule.getId());
-    //     responseDTO.setCalender(teachingSchedule.getCalender().getId());
+    // private TeachingScheduleResponseDTO createResponseDTO(TeachingSchedule
+    // teachingSchedule) {
+    // TeachingScheduleResponseDTO responseDTO = new TeachingScheduleResponseDTO();
+    // responseDTO.setId(teachingSchedule.getId());
+    // responseDTO.setCalender(teachingSchedule.getCalender().getId());
 
-    //     if (teachingSchedule.getSemester() != null) {
-    //         responseDTO.setSemester(teachingSchedule.getSemester().getId());
-    //         responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-    //         responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
-    //     }
-
-    //     responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
-    //     responseDTO.setStatus(teachingSchedule.getStatus());
-
-    //     responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
-    //     responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
-    //     responseDTO.setThu(teachingSchedule.getCalender().getThu());
-    //     responseDTO.setDay(teachingSchedule.getCalender().getDay());
-    //     responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
-    //     responseDTO.setNote(teachingSchedule.getCalender().getNote());
-
-    //     responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
-    //     responseDTO.setName(teachingSchedule.getGroupStudent().getName());
-    //     responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getTeacher().getId());
-
-    //     return responseDTO;
-    // }
-    // public List<TeachingScheduleResponseDTO> getAllTeachingSchedulesByTeacherId(Integer teacherId) {
-    //     List<TeachingSchedule> teachingSchedules = teachingScheduleRepository.findByGroupStudent_Teacher_Id(teacherId);
-
-    //     List<TeachingScheduleResponseDTO> responseDTOs = new ArrayList<>();
-    //     for (TeachingSchedule teachingSchedule : teachingSchedules) {
-    //         TeachingScheduleResponseDTO responseDTO = createResponseDTO(teachingSchedule);
-    //         responseDTOs.add(responseDTO);
-    //     }
-
-    //     return responseDTOs;
+    // if (teachingSchedule.getSemester() != null) {
+    // responseDTO.setSemester(teachingSchedule.getSemester().getId());
+    // responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
+    // responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
     // }
 
+    // responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
+    // responseDTO.setStatus(teachingSchedule.getStatus());
 
+    // responseDTO.setRoom(teachingSchedule.getCalender().getRoom());
+    // responseDTO.setWeek(teachingSchedule.getCalender().getWeek());
+    // responseDTO.setThu(teachingSchedule.getCalender().getThu());
+    // responseDTO.setDay(teachingSchedule.getCalender().getDay());
+    // responseDTO.setPeriod(teachingSchedule.getCalender().getPeriod());
+    // responseDTO.setNote(teachingSchedule.getCalender().getNote());
+
+    // responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
+    // responseDTO.setName(teachingSchedule.getGroupStudent().getName());
+    // responseDTO.setTeacherId(teachingSchedule.getGroupStudent().getTeacher().getId());
+
+    // return responseDTO;
+    // }
+    // public List<TeachingScheduleResponseDTO>
+    // getAllTeachingSchedulesByTeacherId(Integer teacherId) {
+    // List<TeachingSchedule> teachingSchedules =
+    // teachingScheduleRepository.findByGroupStudent_Teacher_Id(teacherId);
+
+    // List<TeachingScheduleResponseDTO> responseDTOs = new ArrayList<>();
+    // for (TeachingSchedule teachingSchedule : teachingSchedules) {
+    // TeachingScheduleResponseDTO responseDTO =
+    // createResponseDTO(teachingSchedule);
+    // responseDTOs.add(responseDTO);
+    // }
+
+    // return responseDTOs;
+    // }
 
     // hàm thêm lịch cho nhóm sinh viên
     public void addTeachingSchedule(TeachingScheduleResponseDTO requestDTO) throws InvalidValueException {
