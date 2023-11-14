@@ -21,7 +21,7 @@ public interface RegisterTeacherRepository extends JpaRepository<RegisterTeacher
     List<RegisterTeacher> findAll();
 
     // Tìm thông tin đăng ký theo điều kiện status = 1 và trả về lớp DTO RegisterTeacherInfo
-    @Query("SELECT NEW com.luanvan.ThesisTrack_Backend.registerteacher.RegisterTeacherInfo(rt.teacher.id, rt.teacher.name, rt.student.numberStudent, rt.student.name) FROM RegisterTeacher rt WHERE rt.status = 1")
+    @Query("SELECT NEW com.luanvan.ThesisTrack_Backend.registerteacher.RegisterTeacherInfo(rt.teacher.id, rt.teacher.name, rt.student.numberStudent, rt.student.name, rt.mark) FROM RegisterTeacher rt WHERE rt.status = 1")
     List<RegisterTeacherInfo> findRegisterTeacherInfoByStatus();
 
     List<RegisterTeacher> findByStudentIdAndSemesterId(Integer studentId, Integer semesterId);

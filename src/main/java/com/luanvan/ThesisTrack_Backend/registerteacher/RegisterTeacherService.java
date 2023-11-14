@@ -43,39 +43,6 @@ public class RegisterTeacherService {
         this.semesterRepository = semesterRepository;
     }
 
-    // đăng ký sinh viên
-    // public void createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
-    //     // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
-    //     boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
-
-    //     if (isExistingRegistration) {
-    //         throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
-    //     }
-
-    //     Student student = studentRepository.findById(studentId)
-    //             .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
-
-    //     Teacher teacher = teacherRepository.findById(teacherId)
-    //             .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
-
-    //     if (student.getStatus() == 1) {
-    //         throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác trước đó.");
-    //     }
-
-    //     if (mark == null || mark == 0.0f) {
-    //         throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
-    //     }
-
-    //     RegisterTeacher registerTeacher = new RegisterTeacher();
-    //     registerTeacher.setStudent(student);
-    //     registerTeacher.setTeacher(teacher);
-    //     registerTeacher.setMark(mark);
-    //     registerTeacher.setStatus(0);
-
-    //     registerTeacherRepository.save(registerTeacher);
-
-    // }
-
     // cập nhật status sau đăng ký và phê duyệt của giảng viên
     public void updateStatus(Integer id, RegisterTeacher registerTeacher) {
         RegisterTeacher r = registerTeacherRepository.findById(id)
@@ -142,6 +109,7 @@ public class RegisterTeacherService {
         return registerTeacherRepository.findRegisterTeacherInfoByStatus();
     }
 
+    // đăng ký giảng viên của sinh viên 
     public void createRegisterTeacher(RegisterTeacher registerTeacher) {
         Student student = studentRepository.findById(registerTeacher.getStudent().getId())
                 .orElseThrow(() -> new NotFoundException(

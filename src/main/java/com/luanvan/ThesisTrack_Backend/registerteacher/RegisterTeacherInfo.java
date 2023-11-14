@@ -12,6 +12,7 @@ public class RegisterTeacherInfo {
     private String teacherName;
     private String studentNumber;
     private String studentName;
+    private Float mark;
 
     // Getter và Setter
     // public RegisterTeacherInfo(Integer teacherId, String teacherName, String studentNumber, String studentName) {
