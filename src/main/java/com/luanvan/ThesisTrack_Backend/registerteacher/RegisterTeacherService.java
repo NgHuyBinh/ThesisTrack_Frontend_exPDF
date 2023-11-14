@@ -17,7 +17,7 @@ import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
 // import com.luanvan.ThesisTrack_Backend.topic.Topic;
 import com.luanvan.ThesisTrack_Backend.topic.TopicRepository;
 
-import jakarta.validation.Valid;
+// import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -126,6 +126,7 @@ public class RegisterTeacherService {
         if(LocalDate.now().isBefore(semester.getRtStartDate()) || LocalDate.now().isAfter(semester.getRtEndDay())) {
             throw new InvalidValueException("Chưa đến thời gian đăng ký giảng viên.");
         }
+        // kiểm tra sinh viên có giảng viên hướng dẫn hay chưa 
         List<RegisterTeacher> registerTeachers = registerTeacherRepository.findByStudentIdAndSemesterId(student.getId(),
                 semester.getId());
         for (RegisterTeacher r : registerTeachers) {

@@ -1,5 +1,7 @@
 package com.luanvan.ThesisTrack_Backend.feedback;
 
+import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
+import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
 import com.luanvan.ThesisTrack_Backend.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,8 @@ public class FeedbackService {
     private final StudentRepository studentRepository;
 
     @Autowired
-    public FeedbackService(FeedbackRepository feedbackRepository, StudentService studentService
-    ,  StudentRepository studentRepository
+    public FeedbackService(FeedbackRepository feedbackRepository, StudentService studentService,
+            StudentRepository studentRepository
 
     ) {
         this.feedbackRepository = feedbackRepository;
@@ -33,15 +35,12 @@ public class FeedbackService {
     }
 
     public void createFeedback(Feedback feedback) {
+        Student student = studentRepository.findById(feedback.getStudent().getId()).orElseThrow(
+                () -> new NotFoundException("Không tồn tại sinh viên có id " + feedback.getStudent().getId()));
         // Kiểm tra xem nội dung phản hồi có được nhập không
         if (feedback.getNote() == null || feedback.getNote().isEmpty()) {
             throw new IllegalArgumentException("Nội dung phản hồi không được để trống.");
         }
-
-        // Kiểm tra xem sinh viên có tồn tại không
-        // if (!studentService.studentExists(feedback.getStudent().getId())) {
-        //     throw new IllegalArgumentException("Sinh viên không tồn tại.");
-        // }
 
         // Kiểm tra xem đã có phản hồi chưa cho sinh viên này
         if (feedbackRepository.existsByStudentIdAndStatus(feedback.getStudent().getId(), feedback.getStatus())) {
@@ -54,7 +53,7 @@ public class FeedbackService {
 
     }
 
-    // cập nhật phản hồi , trả lời phản  hồi của sinh viên 
+    // cập nhật phản hồi , trả lời phản hồi của sinh viên
     public Feedback updateFeedback(Integer id, Feedback updatedFeedback) {
         // Kiểm tra xem feedback có tồn tại không
         Feedback existingFeedback = feedbackRepository.findById(id).orElse(null);
@@ -75,21 +74,6 @@ public class FeedbackService {
         }
         return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
     }
-
-    // lấy phản hồi theo sinh viên 
-    // public Feedback getFeedbackByStudentId(Integer studentId) {
-    //     // Kiểm tra xem sinh viên có tồn tại không
-    //     if (!studentService.studentExists(studentId)) {
-    //         throw new IllegalArgumentException("Sinh viên không tồn tại.");
-    //     }
-
-    //     // Lấy danh sách phản hồi theo ID sinh viên
-    //     List<Feedback> feedbackList = feedbackRepository.findByStudentId(studentId);
-
-    //     // Nếu danh sách không rỗng, trả về phản hồi đầu tiên
-    //     return feedbackList.stream().findFirst()
-    //             .orElseThrow(() -> new IllegalArgumentException("Sinh viên này không có phản hồi."));
-    // }
 
     public List<Feedback> getFeedbacksByStudentId(Integer studentId) {
         // Sử dụng phương thức mới thêm vào repository

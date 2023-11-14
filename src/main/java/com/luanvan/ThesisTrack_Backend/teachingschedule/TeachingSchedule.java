@@ -34,8 +34,8 @@ public class TeachingSchedule {
     @ManyToOne
     @JoinColumn(name = "calender_id")
     private Calender calender;
-    // học kỳ
 
+    // học kỳ
     @ManyToOne
     @JoinColumn(name = "semester_id")
     private Semester semester;

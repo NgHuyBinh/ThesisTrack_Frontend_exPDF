@@ -18,23 +18,22 @@ import lombok.NoArgsConstructor;
 @Entity
 
 // hội đồng báo cáo luận văn tốt nghiệp
-
 public class Supervisor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id1")
-    private Teacher thuKy;
+    @JoinColumn(name = "thuky")
+    private Teacher teacher1;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id2")
-    private Teacher chuTich;
+    @JoinColumn(name = "chutich")
+    private Teacher teacher2;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id3")
-    private Teacher uyVien;  
+    @JoinColumn(name = "uyvien")
+    private Teacher teach3;  
 
-    private Integer status;
+    private Integer status = 0;
 }

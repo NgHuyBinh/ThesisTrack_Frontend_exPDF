@@ -1,20 +1,12 @@
 package com.luanvan.ThesisTrack_Backend.topic;
 
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
-// import com.luanvan.ThesisTrack_Backend.exception.ResourceNotFoundException;
 import com.luanvan.ThesisTrack_Backend.subject.SubjectRepository;
 import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
 
-import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-// import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.luanvan.ThesisTrack_Backend.subject.Subject;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;

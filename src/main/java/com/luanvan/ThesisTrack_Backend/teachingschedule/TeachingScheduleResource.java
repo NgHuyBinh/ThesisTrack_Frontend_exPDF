@@ -21,14 +21,9 @@ public class TeachingScheduleResource {
 
     // tạo lịch cho nhóm báo cáo  sinh viên 
     @PostMapping("/add")
-    public ResponseEntity<?> addTeachingSchedule(@RequestBody TeachingScheduleResponseDTO requestDTO) {
-        try {
-            // System.out.println("22342342342343242342342342342343242342342334234232344234242342");
-            teachingScheduleService.addTeachingSchedule(requestDTO);
-            return new ResponseEntity<>("Lịch báo cáo của nhóm này được thêm thành công.", HttpStatus.CREATED);
-        } catch (InvalidValueException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> addTeachingSchedule(@RequestBody TeachingSchedule teachingSchedule) {
+        teachingScheduleService.addTeachingSchedule(teachingSchedule);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // lấy tất cả 

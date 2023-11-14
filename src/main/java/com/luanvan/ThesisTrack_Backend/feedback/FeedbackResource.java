@@ -46,14 +46,9 @@ public class FeedbackResource {
 
     // thêm
     @PostMapping("/add")
-    public ResponseEntity<?> createFeedback(@RequestBody Feedback feedback) {
-        try {
-            feedbackService.createFeedback(feedback);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Phản hồi đã được gửi thành công.");
-        } catch (IllegalArgumentException e) {
-            // Xử lý lỗi khi kiểm tra dữ liệu không hợp lệ
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<Void> createFeedback(@RequestBody Feedback feedback) {
+        feedbackService.createFeedback(feedback);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // @PostMapping("/add")

@@ -42,13 +42,10 @@ public class GroupStudentResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addGroupStudent(@RequestBody GroupStudentResponseDTO groupStudentRequestDTO) {
-        try {
-            groupStudentService.addGroupStudent(groupStudentRequestDTO);
-            return new ResponseEntity<>("Thêm nhóm sinh viên thành công", HttpStatus.CREATED);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> addGroupStudent(@RequestBody GroupStudent groupStudent) {
+        groupStudentService.addGroupStudent(groupStudent);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
     }
 
 }

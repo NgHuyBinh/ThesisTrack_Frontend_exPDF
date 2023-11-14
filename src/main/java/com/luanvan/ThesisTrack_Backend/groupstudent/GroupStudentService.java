@@ -18,13 +18,13 @@ public class GroupStudentService {
 
     @Autowired
     public GroupStudentService(
-        GroupStudentRepository groupStudentRepository,
-        TeacherRepository teacherRepository
-        ) {
+            GroupStudentRepository groupStudentRepository,
+            TeacherRepository teacherRepository) {
         this.groupStudentRepository = groupStudentRepository;
         this.teacherRepository = teacherRepository;
     }
-        public List<GroupStudentResponseDTO> getAllGroupStudents() {
+
+    public List<GroupStudentResponseDTO> getAllGroupStudents() {
         List<GroupStudent> groupStudents = groupStudentRepository.findAll();
         return groupStudents.stream()
                 .map(this::convertToDTO)
@@ -43,10 +43,6 @@ public class GroupStudentService {
                 .collect(Collectors.toList());
     }
 
-        private boolean teacherExists(Integer teacherId) {
-        return teacherRepository.existsById(teacherId);
-    }
-
     private GroupStudentResponseDTO convertToDTO(GroupStudent groupStudent) {
         GroupStudentResponseDTO dto = new GroupStudentResponseDTO();
         dto.setId(groupStudent.getId());
@@ -56,39 +52,11 @@ public class GroupStudentService {
         return dto;
     }
 
-    private GroupStudent convertToEntity(GroupStudentResponseDTO dto) {
-        GroupStudent groupStudent = new GroupStudent();
-        groupStudent.setCode(dto.getCode());
-        groupStudent.setName(dto.getName());
+    // hàm thêm nhóm sinh viên để chia  nhóm sinh viên 
+    public void addGroupStudent(GroupStudent groupStudent) {
+        Teacher teacher = teacherRepository.findById(groupStudent.getTeacher().getId()).orElseThrow(() -> new NotFoundException("Không tồn tại giảng viên với id " + groupStudent.getTeacher().getId()));
 
-        Optional<Teacher> teacher = teacherRepository.findById(dto.getTeacherId());
-        teacher.ifPresent(groupStudent::setTeacher);
-
-        return groupStudent;
+        groupStudentRepository.save(groupStudent);
     }
 
-   
-    // public List<GroupStudent> getAllGroups() {
-    //     return groupStudentRepository.findAll();
-    // }
-
-    // public GroupStudent getById(Integer id) {
-    //     return groupStudentRepository.findById(id).orElse(null);
-    // }
-
-    public GroupStudentResponseDTO addGroupStudent(GroupStudentResponseDTO groupStudentDTO) {
-        Integer teacherId = groupStudentDTO.getTeacherId();
-        
-        // Kiểm tra xem giáo viên có tồn tại không
-        if (!teacherRepository.existsById(teacherId)) {
-            throw new NotFoundException("Không tồn tại giáo viên với ID " + teacherId);
-        }
-    
-        GroupStudent groupStudent = convertToEntity(groupStudentDTO);
-        GroupStudent savedGroupStudent = groupStudentRepository.save(groupStudent);
-    
-        return convertToDTO(savedGroupStudent);
-    }
-    
-    
 }
