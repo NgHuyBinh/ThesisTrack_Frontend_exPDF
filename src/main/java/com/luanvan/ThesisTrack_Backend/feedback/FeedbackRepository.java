@@ -1,15 +1,13 @@
-// package com.luanvan.ThesisTrack_Backend.feedback;
+package com.luanvan.ThesisTrack_Backend.feedback;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-// import com.luanvan.ThesisTrack_Backend.student.Student;
+import java.util.List;
 
-// import java.util.List;
+@Repository
+public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
+    boolean existsByStudentIdAndStatus(Integer studentId, Integer status);
 
-// public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
-//     List<Feedback> findByStudentId(Integer studentId);
-
-//     List<Feedback> findByTeacherId(Integer teacherId);
-
-//      List<Feedback> findByStudent(Student student);
-// }
+    List<Feedback> findByStudentId(Integer studentId);
+}

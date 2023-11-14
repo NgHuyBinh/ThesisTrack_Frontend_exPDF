@@ -12,6 +12,10 @@ import java.util.Optional;
 public interface SemesterRepository extends JpaRepository<Semester, Integer> {
     @Query("SELECT s FROM Semester s " +
             "WHERE :currentDate BETWEEN s.startDate AND s.endDate")
-    Optional<Semester> findSesmesterByCurrentDateBetweenStartDateAndEndDate(@Param("currentDate") LocalDate currentDate);
-   
+    Optional<Semester> findSesmesterByCurrentDateBetweenStartDateAndEndDate(
+            @Param("currentDate") LocalDate currentDate);
+
+    @Query("SELECT s FROM Semester s " +
+            "WHERE s.startDate <= :currentDate AND s.endDate >= :currentDate")
+    Optional<Semester> findCurrentSemester(@Param("currentDate") LocalDate currentDate);
 }

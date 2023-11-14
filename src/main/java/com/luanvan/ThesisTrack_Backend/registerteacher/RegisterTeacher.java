@@ -1,5 +1,6 @@
 package com.luanvan.ThesisTrack_Backend.registerteacher;
 
+import com.luanvan.ThesisTrack_Backend.semester.Semester;
 import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
@@ -23,22 +24,25 @@ public class RegisterTeacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // @NotNull(message = "ID sinh viên không được null")
+    @NotNull(message = "ID sinh viên không được null")
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
-    // @NotNull(message = "Id giảng viên không được null")
+    @NotNull(message = "Id giảng viên không được null")
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
     @NotNull(message = "Không thể để trống điểm trung bình tích lũy.")
-    // private String mark;
     private Float mark;
 
-    private Integer status;
+    private Integer status = 0;
 
-    private String note;
+    private String note = new String();
 }
 

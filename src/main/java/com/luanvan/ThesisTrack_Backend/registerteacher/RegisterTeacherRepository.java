@@ -16,12 +16,14 @@ public interface RegisterTeacherRepository extends JpaRepository<RegisterTeacher
 
     boolean existsByStudentAndTeacherAndStatus(Student student, Teacher teacher, Integer status);
 
-    boolean existsByStudentIdAndTeacherId(Integer studentId, Integer teacherId);
+    boolean existsByStudentIdAndTeacherIdAndSemesterId(Integer studentId, Integer teacherId, Integer semesterId);
 
     List<RegisterTeacher> findAll();
 
     // Tìm thông tin đăng ký theo điều kiện status = 1 và trả về lớp DTO RegisterTeacherInfo
     @Query("SELECT NEW com.luanvan.ThesisTrack_Backend.registerteacher.RegisterTeacherInfo(rt.teacher.id, rt.teacher.name, rt.student.numberStudent, rt.student.name) FROM RegisterTeacher rt WHERE rt.status = 1")
     List<RegisterTeacherInfo> findRegisterTeacherInfoByStatus();
+
+    List<RegisterTeacher> findByStudentIdAndSemesterId(Integer studentId, Integer semesterId);
 
 }

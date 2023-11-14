@@ -1,57 +1,103 @@
-// package com.luanvan.ThesisTrack_Backend.feedback;
+package com.luanvan.ThesisTrack_Backend.feedback;
 
-// import org.springframework.stereotype.Service;
+import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
+import com.luanvan.ThesisTrack_Backend.student.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-// import com.luanvan.ThesisTrack_Backend.student.Student;
-// import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
-// import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
-// import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
+import java.util.List;
 
-// import jakarta.persistence.EntityNotFoundException;
+@Service
+public class FeedbackService {
 
-// import java.util.List;
+    private final FeedbackRepository feedbackRepository;
+    private final StudentService studentService;
+    private final StudentRepository studentRepository;
 
-// @Service
-// public class FeedbackService {
+    @Autowired
+    public FeedbackService(FeedbackRepository feedbackRepository, StudentService studentService
+    ,  StudentRepository studentRepository
 
+    ) {
+        this.feedbackRepository = feedbackRepository;
+        this.studentService = studentService;
+        this.studentRepository = studentRepository;
+    }
 
-//     private final FeedbackRepository feedbackRepository;
-//     private final StudentRepository studentRepository;
-//     private final TeacherRepository teacherRepository;
+    public List<Feedback> getAllFeedbacks() {
+        return feedbackRepository.findAll();
+    }
 
-//     public FeedbackService(FeedbackRepository feedbackRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
-//         this.feedbackRepository = feedbackRepository;
-//         this.studentRepository = studentRepository;
-//         this.teacherRepository = teacherRepository;
-//     }
+    public Feedback getFeedbackById(Integer id) {
+        return feedbackRepository.findById(id).orElse(null);
+    }
 
-//     public void addFeedback(FeedbackResponseDTO feedbackResponseDTO) {
-//         // Kiểm tra sự tồn tại của sinh viên hoặc giảng viên
-//         Integer studentId = feedbackResponseDTO.getStudentId();
-//         Integer teacherId = feedbackResponseDTO.getTeacherId();
-        
-//         Student student = studentRepository.findById(studentId).orElse(null);
-//         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
-    
-//         if (student != null || teacher != null) {
-//             // Thêm phản hồi nếu có tồn tại sinh viên hoặc giảng viên
-//             Feedback feedback = new Feedback();
-//             feedback.setStudent(student);
-//             feedback.setTeacher(teacher);
-//             feedback.setSendDate(feedbackResponseDTO.getSendDate());
-//             feedback.setStatus(feedbackResponseDTO.getStatus());
-//             feedback.setNote(feedbackResponseDTO.getNote());
-//             feedbackRepository.save(feedback);
-//         } else {
-//             // Xử lý khi không tìm thấy sinh viên hoặc giảng viên
-//             throw new EntityNotFoundException("Không tìm thấy sinh viên hoặc giảng viên.");
-//         }
-//     }
-    
+    public void createFeedback(Feedback feedback) {
+        // Kiểm tra xem nội dung phản hồi có được nhập không
+        if (feedback.getNote() == null || feedback.getNote().isEmpty()) {
+            throw new IllegalArgumentException("Nội dung phản hồi không được để trống.");
+        }
 
-//     public List<FeedbackResponseDTO> getAllFeedbacks() {
-//         // Thêm logic để truy vấn và chuyển đổi phản hồi thành danh sách FeedbackResponseDTO
-//         // Trả về danh sách FeedbackResponseDTO
-//         return null;
-//     }
-// }
+        // Kiểm tra xem sinh viên có tồn tại không
+        // if (!studentService.studentExists(feedback.getStudent().getId())) {
+        //     throw new IllegalArgumentException("Sinh viên không tồn tại.");
+        // }
+
+        // Kiểm tra xem đã có phản hồi chưa cho sinh viên này
+        if (feedbackRepository.existsByStudentIdAndStatus(feedback.getStudent().getId(), feedback.getStatus())) {
+            throw new IllegalArgumentException("Sinh viên đã gửi phản hồi trước đó.");
+        }
+
+        // Có thể thêm logic kiểm tra và xử lý trước khi lưu feedback vào cơ sở dữ liệu
+        feedbackRepository.save(feedback);
+        // return "Phản hồi đã được tạo thành công.";
+
+    }
+
+    // cập nhật phản hồi , trả lời phản  hồi của sinh viên 
+    public Feedback updateFeedback(Integer id, Feedback updatedFeedback) {
+        // Kiểm tra xem feedback có tồn tại không
+        Feedback existingFeedback = feedbackRepository.findById(id).orElse(null);
+        if (existingFeedback != null) {
+            // Cập nhật các thông tin cần thiết
+            if (updatedFeedback.getNote() != null) {
+                existingFeedback.setNote(updatedFeedback.getNote());
+            }
+
+            if (updatedFeedback.getReply() != null) {
+                existingFeedback.setReply(updatedFeedback.getReply());
+            }
+
+            // Có thể cập nhật thêm các thông tin khác tùy ý
+
+            // Lưu lại vào cơ sở dữ liệu
+            return feedbackRepository.save(existingFeedback);
+        }
+        return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
+    }
+
+    // lấy phản hồi theo sinh viên 
+    // public Feedback getFeedbackByStudentId(Integer studentId) {
+    //     // Kiểm tra xem sinh viên có tồn tại không
+    //     if (!studentService.studentExists(studentId)) {
+    //         throw new IllegalArgumentException("Sinh viên không tồn tại.");
+    //     }
+
+    //     // Lấy danh sách phản hồi theo ID sinh viên
+    //     List<Feedback> feedbackList = feedbackRepository.findByStudentId(studentId);
+
+    //     // Nếu danh sách không rỗng, trả về phản hồi đầu tiên
+    //     return feedbackList.stream().findFirst()
+    //             .orElseThrow(() -> new IllegalArgumentException("Sinh viên này không có phản hồi."));
+    // }
+
+    public List<Feedback> getFeedbacksByStudentId(Integer studentId) {
+        // Sử dụng phương thức mới thêm vào repository
+        return feedbackRepository.findByStudentId(studentId);
+    }
+
+    public void deleteFeedback(Integer id) {
+        feedbackRepository.deleteById(id);
+    }
+
+}

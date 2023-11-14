@@ -39,7 +39,7 @@ public class Topic {
     }
 
 
-    private Integer studentId;
+    // private Integer studentId;
     // Biến kiểm tra xem đề tài đăng ký chưa?
     // private Boolean status;
 

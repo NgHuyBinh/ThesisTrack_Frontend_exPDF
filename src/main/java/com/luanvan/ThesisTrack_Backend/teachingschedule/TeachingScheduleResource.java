@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
-import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
-
 import java.util.List;
 
 @RestController
@@ -21,6 +19,7 @@ public class TeachingScheduleResource {
         this.teachingScheduleService = teachingScheduleService;
     }
 
+    // tạo lịch cho nhóm báo cáo  sinh viên 
     @PostMapping("/add")
     public ResponseEntity<?> addTeachingSchedule(@RequestBody TeachingScheduleResponseDTO requestDTO) {
         try {
@@ -32,6 +31,7 @@ public class TeachingScheduleResource {
         }
     }
 
+    // lấy tất cả 
     @GetMapping("/all")
     public ResponseEntity<List<TeachingScheduleResponseDTO>> getAllTeachingSchedules() {
         List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService.getAllTeachingSchedules();
@@ -48,6 +48,7 @@ public class TeachingScheduleResource {
         }
     }
 
+    // hàm lấy lịch báo cáo theo nhóm sinh viên 
     @GetMapping("/groupstudent/{groupStudentId}")
     public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingSchedulesByGroupStudent(
             @PathVariable Integer groupStudentId) {
@@ -56,6 +57,7 @@ public class TeachingScheduleResource {
         return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
     }
 
+    // lịch báo cáo lấy theo id giảng viên 
     @GetMapping("/teacher/{teacherId}")
     public ResponseEntity<List<TeachingScheduleResponseDTO>> getTeachingScheduleByTeacherId(
             @PathVariable Integer teacherId) {

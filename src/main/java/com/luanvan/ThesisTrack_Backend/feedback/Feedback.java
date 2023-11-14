@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Feedback {
@@ -28,11 +28,7 @@ public class Feedback {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "student_id")
-    private Student student; 
-
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    private Student student;
 
     private LocalDate sendDate = LocalDate.now();
 
@@ -41,17 +37,10 @@ public class Feedback {
     @NotNull(message = "Phản hồi không thể để trống nội dung.")
     private String note;
 
+    private String reply = new String();
+
     public void setStudent(Student student) {
         this.student = student;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public void setStudentId(Integer studentId) {
-    }
-
-    public void setTeacherId(Integer teacherId) {
-    }
 }

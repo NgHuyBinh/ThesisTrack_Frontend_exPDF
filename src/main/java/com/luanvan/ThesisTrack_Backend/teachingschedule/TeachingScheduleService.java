@@ -62,7 +62,7 @@ public class TeachingScheduleService {
             responseDTO.setNote(teachingSchedule.getCalender().getNote());
 
             responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemester());
 
             responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
             responseDTO.setName(teachingSchedule.getGroupStudent().getName());
@@ -89,7 +89,7 @@ public class TeachingScheduleService {
         if (teachingSchedule.getSemester() != null) {
             responseDTO.setSemester(teachingSchedule.getSemester().getId());
             responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemester());
         }
 
         responseDTO.setGroupStudent(teachingSchedule.getGroupStudent().getId());
@@ -131,7 +131,7 @@ public class TeachingScheduleService {
             responseDTO.setNote(teachingSchedule.getCalender().getNote());
 
             responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+            responseDTO.setSemester_number(teachingSchedule.getSemester().getSemester());
 
             responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
             responseDTO.setName(teachingSchedule.getGroupStudent().getName());
@@ -175,7 +175,7 @@ public class TeachingScheduleService {
         responseDTO.setNote(teachingSchedule.getCalender().getNote());
 
         responseDTO.setSchoolYear(teachingSchedule.getSemester().getSchoolYear());
-        responseDTO.setSemester_number(teachingSchedule.getSemester().getSemesterNumber());
+        responseDTO.setSemester_number(teachingSchedule.getSemester().getSemester());
 
         responseDTO.setCode(teachingSchedule.getGroupStudent().getCode());
         responseDTO.setName(teachingSchedule.getGroupStudent().getName());

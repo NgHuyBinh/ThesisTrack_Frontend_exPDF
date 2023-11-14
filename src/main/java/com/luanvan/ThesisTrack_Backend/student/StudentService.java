@@ -43,5 +43,9 @@ public class StudentService {
 
         return null; // Hoặc có thể trả về một giá trị mặc định khác tùy theo yêu cầu của bạn.
     }
+
+    public boolean studentExists(Integer id) {
+        return false;
+    }
 }
  

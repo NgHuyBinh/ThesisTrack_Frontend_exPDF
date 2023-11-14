@@ -3,13 +3,12 @@ package com.luanvan.ThesisTrack_Backend.registerteacher;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-// import org.springframework.web.bind.annotation.PatchMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.RequestBody;
 
 import com.luanvan.ThesisTrack_Backend.exception.AlreadyExistsException;
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
+import com.luanvan.ThesisTrack_Backend.semester.Semester;
+import com.luanvan.ThesisTrack_Backend.semester.SemesterRepository;
 // import com.luanvan.ThesisTrack_Backend.registertopic.RegisterTopic;
 import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
@@ -20,6 +19,7 @@ import com.luanvan.ThesisTrack_Backend.topic.TopicRepository;
 
 import jakarta.validation.Valid;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,47 +31,50 @@ public class RegisterTeacherService {
     private RegisterTeacherRepository registerTeacherRepository;
     private StudentRepository studentRepository;
     private TeacherRepository teacherRepository;
+    private SemesterRepository semesterRepository;
 
     @Autowired
-    public RegisterTeacherService(RegisterTeacherRepository registerTeacherRepository,
+    public RegisterTeacherService(SemesterRepository semesterRepository,
+            RegisterTeacherRepository registerTeacherRepository,
             StudentRepository studentRepository, TeacherRepository teacherRepository, TopicRepository topicRepository) {
         this.registerTeacherRepository = registerTeacherRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.semesterRepository = semesterRepository;
     }
 
     // đăng ký sinh viên
-    public void createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
-        // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
-        boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
+    // public void createRegisterTeacher(Integer studentId, Integer teacherId, Float mark) {
+    //     // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
+    //     boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherId(studentId, teacherId);
 
-        if (isExistingRegistration) {
-            throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
-        }
+    //     if (isExistingRegistration) {
+    //         throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
+    //     }
 
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
+    //     Student student = studentRepository.findById(studentId)
+    //             .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
 
-        Teacher teacher = teacherRepository.findById(teacherId)
-                .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
+    //     Teacher teacher = teacherRepository.findById(teacherId)
+    //             .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
 
-        if (student.getStatus() == 1) {
-            throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác trước đó.");
-        }
+    //     if (student.getStatus() == 1) {
+    //         throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác trước đó.");
+    //     }
 
-        if (mark == null || mark == 0.0f) {
-            throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
-        }
+    //     if (mark == null || mark == 0.0f) {
+    //         throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
+    //     }
 
-        RegisterTeacher registerTeacher = new RegisterTeacher();
-        registerTeacher.setStudent(student);
-        registerTeacher.setTeacher(teacher);
-        registerTeacher.setMark(mark);
-        registerTeacher.setStatus(0);
+    //     RegisterTeacher registerTeacher = new RegisterTeacher();
+    //     registerTeacher.setStudent(student);
+    //     registerTeacher.setTeacher(teacher);
+    //     registerTeacher.setMark(mark);
+    //     registerTeacher.setStatus(0);
 
-        registerTeacherRepository.save(registerTeacher);
+    //     registerTeacherRepository.save(registerTeacher);
 
-    }
+    // }
 
     // cập nhật status sau đăng ký và phê duyệt của giảng viên
     public void updateStatus(Integer id, RegisterTeacher registerTeacher) {
@@ -83,55 +86,6 @@ public class RegisterTeacherService {
         r.setStatus(registerTeacher.getStatus());
         registerTeacherRepository.save(r);
     }
-
-    // public ResponseEntity<String> createRegisterTeacher(Integer studentId,
-    // Integer teacherId, Float mark) {
-    // // Kiểm tra xem đã tồn tại trong bảng RegisterTeacher chưa
-    // boolean isExistingRegistration =
-    // registerTeacherRepository.existsByStudentIdAndTeacherId(studentId,
-    // teacherId);
-
-    // if (isExistingRegistration) {
-    // throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước
-    // đó.");
-    // }
-
-    // Student student = studentRepository.findById(studentId)
-    // .orElseThrow(() -> new NotFoundException("Sinh viên không tồn tại."));
-
-    // Teacher teacher = teacherRepository.findById(teacherId)
-    // .orElseThrow(() -> new NotFoundException("Giảng viên không tồn tại."));
-
-    // if (student.getStatus() == 1) {
-    // throw new InvalidValueException("Sinh viên đã đăng ký với một giảng viên khác
-    // trước đó.");
-    // }
-
-    // if (mark == null || mark == 0.0f) {
-    // throw new InvalidValueException("Vui lòng nhập điểm trung bình.");
-    // }
-
-    // RegisterTeacher registerTeacher = new RegisterTeacher();
-    // registerTeacher.setStudent(student);
-    // registerTeacher.setTeacher(teacher);
-    // registerTeacher.setMark(mark);
-    // registerTeacher.setStatus(0);
-
-    // registerTeacherRepository.save(registerTeacher);
-
-    // return ResponseEntity.ok("Thêm đăng ký giảng viên thành công.");
-    // }
-
-    // private RegisterTeacherResponseDTO
-    // mapRegisterTeacherToResponseDTO(RegisterTeacher registerTeacher) {
-    // RegisterTeacherResponseDTO responseDTO = new RegisterTeacherResponseDTO();
-    // responseDTO.setId(registerTeacher.getId());
-    // responseDTO.setStudentId(registerTeacher.getStudent().getId());
-    // responseDTO.setTeacherId(registerTeacher.getTeacher().getId());
-    // responseDTO.setMark(registerTeacher.getMark());
-    // responseDTO.setStatus(registerTeacher.getStatus());
-    // return responseDTO;
-    // }
 
     public List<RegisterTeacherResponseDTO> getAllRegisterTeachers() {
         // Sử dụng registerTeacherRepository để lấy danh sách tất cả đăng ký giảng viên
@@ -154,15 +108,6 @@ public class RegisterTeacherService {
 
         return responseDTOs;
     }
-
-    // public List<RegisterTeacherResponseDTO> getRegisterTeachersByTeacher(Integer
-    // teacherId) {
-    // List<RegisterTeacher> registerTeachers =
-    // registerTeacherRepository.findByTeacherId(teacherId);
-    // return registerTeachers.stream()
-    // .map(this::mapRegisterTeacherToResponseDTO)
-    // .collect(Collectors.toList());
-    // }
 
     public List<RegisterTeacherResponseDTO> getRegisterTeachersByTeacher(Integer teacherId) {
         List<RegisterTeacher> registerTeachers = registerTeacherRepository.findByTeacherId(teacherId);
@@ -197,7 +142,39 @@ public class RegisterTeacherService {
         return registerTeacherRepository.findRegisterTeacherInfoByStatus();
     }
 
-    public void createRegisterTeacher(@Valid RegisterTeacherResponseDTO registerTeacherResponseDTO) {
+    public void createRegisterTeacher(RegisterTeacher registerTeacher) {
+        Student student = studentRepository.findById(registerTeacher.getStudent().getId())
+                .orElseThrow(() -> new NotFoundException(
+                        "Không tồn tại sinh viên vói id " + registerTeacher.getStudent().getId()));
+        Teacher teacher = teacherRepository.findById(registerTeacher.getTeacher().getId())
+                .orElseThrow(() -> new NotFoundException(
+                        "Không tồn tại giảng viên vói id " + registerTeacher.getTeacher().getId()));
+        Semester semester = semesterRepository.findById(registerTeacher.getSemester().getId())
+                .orElseThrow(() -> new NotFoundException(
+                        "Không tồn tại học kỳ vói id " + registerTeacher.getSemester().getId()));
+        if (registerTeacher.getMark() <= 0 || registerTeacher.getMark() > 4) {
+            throw new InvalidValueException("Vui lòng nhập điểm lớn hơn 0 và bé hơn hoặc bằng 4");
+        }
+        if(LocalDate.now().isBefore(semester.getRtStartDate()) || LocalDate.now().isAfter(semester.getRtEndDay())) {
+            throw new InvalidValueException("Chưa đến thời gian đăng ký giảng viên.");
+        }
+        List<RegisterTeacher> registerTeachers = registerTeacherRepository.findByStudentIdAndSemesterId(student.getId(),
+                semester.getId());
+        for (RegisterTeacher r : registerTeachers) {
+            if (r.getStatus() == 1) {
+                throw new AlreadyExistsException("Bạn đã thuộc một giảng viên khác rồi");
+            }
+        }
+
+        boolean isExistingRegistration = registerTeacherRepository.existsByStudentIdAndTeacherIdAndSemesterId(
+                registerTeacher.getStudent().getId(), registerTeacher.getTeacher().getId(),
+                registerTeacher.getSemester().getId());
+
+        if (isExistingRegistration) {
+            throw new AlreadyExistsException("Bạn đã đăng ký với giảng viên này trước đó.");
+        }
+
+        registerTeacherRepository.save(registerTeacher);
     }
 
 }
