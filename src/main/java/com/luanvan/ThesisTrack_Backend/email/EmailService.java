@@ -1,22 +1,22 @@
 package com.luanvan.ThesisTrack_Backend.email;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 
-import javax.swing.Spring;
-import javax.swing.text.html.CSS;
-import javax.swing.text.html.HTML;
+// import javax.swing.Spring;
+// import javax.swing.text.html.CSS;
+// import javax.swing.text.html.HTML;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.validation.Valid;
+// import jakarta.validation.Valid;
 
 @Service
 public class EmailService {

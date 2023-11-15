@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/vi/addgroupstudent")
+@RequestMapping("/api/v1/addgroupstudent")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
 
 public class AddGroupStudentResource {

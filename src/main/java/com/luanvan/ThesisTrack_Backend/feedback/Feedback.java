@@ -3,7 +3,7 @@ package com.luanvan.ThesisTrack_Backend.feedback;
 import java.time.LocalDate;
 
 import com.luanvan.ThesisTrack_Backend.student.Student;
-import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
+// import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
