@@ -49,7 +49,7 @@ public class CalenderService {
         return calenderRepository.findDuplicates(week, thu, day, room, period);
     }
 
-    public Calender createCalendarItem(Calender calendar) {
+    public void createCalendarItem(Calender calendar) {
         // Check for duplicates
         List<Calender> duplicates = calenderRepository.findDuplicates(
                 calendar.getWeek(),
@@ -59,7 +59,7 @@ public class CalenderService {
                 calendar.getPeriod());
 
         if (duplicates.isEmpty()) {
-            return calenderRepository.save(calendar);
+            calenderRepository.save(calendar);
         } else {
             throw new DuplicateException("Lịch này trùng với lịch đã có.");
         }

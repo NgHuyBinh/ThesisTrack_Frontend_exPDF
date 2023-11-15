@@ -16,5 +16,11 @@
     public ResponseEntity<Semester> getCurrentSemester() {
         return ResponseEntity.status(HttpStatus.OK).body(semesterService.getCurrentSemester());
     }
+    
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateSemester(@PathVariable Integer id, @RequestBody Semester updatedSemester) {
+        semesterService.updateSemester(id, updatedSemester);
+        return ResponseEntity.ok().build();
+    }
 
  }

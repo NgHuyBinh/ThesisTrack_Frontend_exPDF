@@ -55,7 +55,7 @@ public class CalenderResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createCalendarItem(@Valid @RequestBody Calender calendar) {
+    public ResponseEntity<Void> createCalendarItem(@RequestBody Calender calendar) {
         calenderService.createCalendarItem(calendar);
         // return calenderService.createCalendarItem(calendar);
         return ResponseEntity.status(HttpStatus.CREATED).build();

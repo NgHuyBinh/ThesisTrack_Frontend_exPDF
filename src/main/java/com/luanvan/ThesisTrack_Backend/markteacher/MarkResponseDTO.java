@@ -1,6 +1,7 @@
 package com.luanvan.ThesisTrack_Backend.markteacher;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.luanvan.ThesisTrack_Backend.semester.Semester;
 import com.luanvan.ThesisTrack_Backend.student.Student;
@@ -22,6 +23,12 @@ public class MarkResponseDTO {
     private Student student;
 
     private Semester semester;
+
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
+
+    private LocalDate day;
 
     private LocalDate sendDate;
     // private LocalDate sendDate = LocalDate.now();

@@ -19,7 +19,7 @@ public class RegisterTeacherResource {
 
     // đăng ký giảng viên
     @PostMapping("/add")
-    public ResponseEntity<Void> createRegisterTeacher( @RequestBody RegisterTeacher registerTeacher) {
+    public ResponseEntity<Void> createRegisterTeacher(@RequestBody RegisterTeacher registerTeacher) {
         registerTeacherService.createRegisterTeacher(registerTeacher);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

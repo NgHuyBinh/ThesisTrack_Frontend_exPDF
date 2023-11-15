@@ -42,25 +42,4 @@ public class Semester {
 
     @NotNull(message = "Không để trống ngày kết thúc đăng ký")
     private LocalDate rtEndDay;
-    // thêm vào sau
-
-    // public Integer getId() {
-    // return id;
-    // }
-
-    // public String getSchoolYear() {
-    // return schoolYear;
-    // }
-
-    // public Integer getSemesterNumber() {
-    // return semesterNumber;
-    // }
-
-    // public LocalDate getStartDate() {
-    // return startDate;
-    // }
-
-    // public LocalDate getEndDate() {
-    // return endDate;
-    // }
 }
