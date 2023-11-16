@@ -34,16 +34,3 @@ public class GroupStudent {
     private Teacher teacher;
 
 }
-    // chỗ này có thể kết nối với bảng sinh viên viên không hay sinh viên kết nối với bảng này để thông báo lịch cho sinh viên 
-    // hội đồng báo cáo, thêm rồi có thể chỉnh sửa được thay thế giảng viên khác được khi cần thiết khi có sự cố thay đổi lịch của giảng viên
-//    @ManyToOne
-//    @JoinColumn(name="supervisor_id")
-//    private Supervisor supervisor;
-
-//    private String status;
-
-    // kết nối với với lịch báo cáo
-//    @ManyToOne
-//    @JoinColumn(name="teachingSchedule_   id")
-//    private TeachingSchedule teachingSchedule;
-

@@ -20,7 +20,7 @@ public class FeedbackResource {
     }
 
     // lấy tất cả phản hồi
-    @GetMapping
+    @GetMapping("/all")
     public List<Feedback> getAllFeedbacks() {
         return feedbackService.getAllFeedbacks();
     }
@@ -32,7 +32,7 @@ public class FeedbackResource {
         return feedback != null ? ResponseEntity.ok(feedback) : ResponseEntity.notFound().build();
     }
 
-    // lấy phản hồi theo sinh viên 
+    // lấy phản hồi theo sinh viên
     @GetMapping("/student/{studentId}")
     public ResponseEntity<?> getFeedbacksByStudentId(@PathVariable Integer studentId) {
         try {
@@ -42,7 +42,6 @@ public class FeedbackResource {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
 
     // thêm
     @PostMapping("/add")
@@ -64,10 +63,17 @@ public class FeedbackResource {
 
     // chỉnh sửa , có thể ko cần chỉnh sửa
     @PatchMapping("/{id}")
-    public ResponseEntity<Feedback> updateFeedback(@PathVariable Integer id, @RequestBody Feedback updatedFeedback) {
-        Feedback updated = feedbackService.updateFeedback(id, updatedFeedback);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    public ResponseEntity<String> updateFeedback(@PathVariable Integer id, @RequestBody Feedback updatedFeedback) {
+        String resultMessage = feedbackService.updateFeedback(id, updatedFeedback);
+        return ResponseEntity.ok(resultMessage);
     }
+    // @PatchMapping("/{id}")
+    // public ResponseEntity<Feedback> updateFeedback(@PathVariable Integer id,
+    // @RequestBody Feedback updatedFeedback) {
+    // Feedback updated = feedbackService.updateFeedback(id, updatedFeedback);
+    // return updated != null ? ResponseEntity.ok(updated) :
+    // ResponseEntity.notFound().build();
+    // }
 
     // xóa phản hồi
     @DeleteMapping("/{id}")

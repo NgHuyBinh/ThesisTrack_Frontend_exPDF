@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.luanvan.ThesisTrack_Backend.semester.SemesterService;
+import com.luanvan.ThesisTrack_Backend.student.StudentService;
+import com.luanvan.ThesisTrack_Backend.teacher.TeacherService;
+
 import java.util.List;
 
 @RestController
@@ -20,10 +25,19 @@ import java.util.List;
 public class MarkResource {
 
     private final MarkService markService;
+    private final TeacherService teacherService;
+    private final StudentService studentService;
+    private final SemesterService semesterService;
 
     @Autowired
-    public MarkResource(MarkService markService) {
+    public MarkResource(MarkService markService
+    , TeacherService teacherService
+    , StudentService studentService
+    , SemesterService semesterService) {
         this.markService = markService;
+        this.teacherService =  teacherService;
+        this.studentService = studentService;
+        this.semesterService = semesterService;
     }
 
     @GetMapping("/all")

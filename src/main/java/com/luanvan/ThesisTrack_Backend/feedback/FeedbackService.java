@@ -1,5 +1,6 @@
 package com.luanvan.ThesisTrack_Backend.feedback;
 
+import com.luanvan.ThesisTrack_Backend.exception.AlreadyExistsException;
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeedbackService {
@@ -34,18 +36,21 @@ public class FeedbackService {
         return feedbackRepository.findById(id).orElse(null);
     }
 
+    // phản hồi sinh viên
     public void createFeedback(Feedback feedback) {
         Student student = studentRepository.findById(feedback.getStudent().getId()).orElseThrow(
-                () -> new NotFoundException("Không tồn tại sinh viên có id " + feedback.getStudent().getId()));
+                () -> new NotFoundException("Không tồn tại sinh viên có id " + feedback.getId()));
         // Kiểm tra xem nội dung phản hồi có được nhập không
         if (feedback.getNote() == null || feedback.getNote().isEmpty()) {
             throw new IllegalArgumentException("Nội dung phản hồi không được để trống.");
         }
 
         // Kiểm tra xem đã có phản hồi chưa cho sinh viên này
-        if (feedbackRepository.existsByStudentIdAndStatus(feedback.getStudent().getId(), feedback.getStatus())) {
-            throw new IllegalArgumentException("Sinh viên đã gửi phản hồi trước đó.");
-        }
+        // if
+        // (feedbackRepository.existsByStudentIdAndStatus(feedback.getStudent().getId(),
+        // feedback.getStatus())) {
+        // throw new AlreadyExistsException("Sinh viên đã gửi phản hồi trước đó.");
+        // }
 
         // Có thể thêm logic kiểm tra và xử lý trước khi lưu feedback vào cơ sở dữ liệu
         feedbackRepository.save(feedback);
@@ -54,10 +59,13 @@ public class FeedbackService {
     }
 
     // cập nhật phản hồi , trả lời phản hồi của sinh viên
-    public Feedback updateFeedback(Integer id, Feedback updatedFeedback) {
+    public String updateFeedback(Integer id, Feedback updatedFeedback) {
         // Kiểm tra xem feedback có tồn tại không
-        Feedback existingFeedback = feedbackRepository.findById(id).orElse(null);
-        if (existingFeedback != null) {
+        Optional<Feedback> optionalFeedback = feedbackRepository.findById(id);
+
+        if (optionalFeedback.isPresent()) {
+            Feedback existingFeedback = optionalFeedback.get();
+
             // Cập nhật các thông tin cần thiết
             if (updatedFeedback.getNote() != null) {
                 existingFeedback.setNote(updatedFeedback.getNote());
@@ -68,12 +76,37 @@ public class FeedbackService {
             }
 
             // Có thể cập nhật thêm các thông tin khác tùy ý
+            existingFeedback.setStatus(1);
 
             // Lưu lại vào cơ sở dữ liệu
-            return feedbackRepository.save(existingFeedback);
+            feedbackRepository.save(existingFeedback);
+
+            return "Cập nhật phản hồi thành công!";
         }
-        return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
+
+        return "Không tìm thấy phản hồi với ID " + id + ". Cập nhật thất bại!";
     }
+    // public Feedback updateFeedback(Integer id, Feedback updatedFeedback) {
+    // // Kiểm tra xem feedback có tồn tại không
+    // Feedback existingFeedback = feedbackRepository.findById(id).orElse(null);
+    // if (existingFeedback != null) {
+    // // Cập nhật các thông tin cần thiết
+    // if (updatedFeedback.getNote() != null) {
+    // existingFeedback.setNote(updatedFeedback.getNote());
+    // }
+
+    // if (updatedFeedback.getReply() != null) {
+    // existingFeedback.setReply(updatedFeedback.getReply());
+    // }
+
+    // // Có thể cập nhật thêm các thông tin khác tùy ý
+    // existingFeedback.setStatus(1);
+
+    // // Lưu lại vào cơ sở dữ liệu
+    // return feedbackRepository.save(existingFeedback);
+    // }
+    // return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
+    // }
 
     public List<Feedback> getFeedbacksByStudentId(Integer studentId) {
         // Sử dụng phương thức mới thêm vào repository
@@ -81,7 +114,8 @@ public class FeedbackService {
     }
 
     public void deleteFeedback(Integer id) {
-        feedbackRepository.deleteById(id);
+        Feedback feedback = feedbackRepository.findById(id).orElse(null);
+        feedbackRepository.delete(feedback);
     }
 
 }

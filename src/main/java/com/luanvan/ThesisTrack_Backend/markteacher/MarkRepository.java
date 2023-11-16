@@ -7,14 +7,15 @@ import java.util.List;
 
 @Repository
 public interface MarkRepository extends JpaRepository<Mark, Integer> {
-    boolean existsByStudentIdAndTeacherIdAndSemesterId(Integer studentId, Integer teacherId, Integer semesterId);
+    Boolean existsByTeacherIdAndStudentIdAndSemesterId(Integer teacherId, Integer studentId, Integer semesterId);
+    // boolean existsByStudentIdAndTeacherIdAndSemesterIdIgnoreCase(String string, String string2, String string3);
 
-    List<Mark> findByStudentIdAndSemesterId(Integer studentId, Integer semesterId);
+
+    // List<Mark> findByTeacherIdAndStudentIdAndSemesterId(Integer studentId, Integer teacherId, Integer semesterId);
 
     List<Mark> findByTeacherId(Integer teacherId);
 
     List<Mark> findByStudentId(Integer studentId);
 
     List<Mark> findBySemesterId(Integer semesterId);
-    
 } 

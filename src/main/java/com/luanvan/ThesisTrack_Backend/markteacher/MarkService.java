@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 public class MarkService {
-
     private final MarkRepository markRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
@@ -64,10 +63,11 @@ public class MarkService {
         }
 
         // Kiểm tra đã có điểm của sinh viên trong học kỳ này chưa
-        List<Mark> marks = markRepository.findByStudentIdAndSemesterId(mark.getStudent().getId(),
-                mark.getSemester().getId());
-        if (!marks.isEmpty()) {
-            throw new AlreadyExistsException("Sinh viên này đã chấm điểm rồi");
+        boolean isExistingMark = markRepository.existsByTeacherIdAndStudentIdAndSemesterId(mark.getTeacher().getId(),
+                mark.getStudent().getId(), mark.getSemester().getId());
+                System.out.println(isExistingMark);
+        if (isExistingMark) {
+            throw new AlreadyExistsException("Bạn đã chấm điểm cho sinh viên này trước đó rồi.");
         }
 
         // kiểm tra điểm phần 1 nội dung
@@ -146,21 +146,6 @@ public class MarkService {
 
         markRepository.save(mark);
     }
-
-    // public Mark updateMark(Integer id, Mark updatedMark) {
-    // // Kiểm tra xem mark có tồn tại không
-    // Mark existingMark = markRepository.findById(id).orElse(null);
-    // if (existingMark != null) {
-    // // Cập nhật các thông tin cần thiết
-    // existingMark.setMark11(updatedMark.getMark11());
-    // existingMark.setNote11(updatedMark.getNote11());
-    // // Cập nhật thêm các trường khác tùy ý
-
-    // // Lưu lại vào cơ sở dữ liệu
-    // return markRepository.save(existingMark);
-    // }
-    // return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
-    // }
 
     public void deleteMark(Integer id) {
         markRepository.deleteById(id);
