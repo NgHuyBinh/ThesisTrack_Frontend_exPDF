@@ -55,4 +55,8 @@ public class RegisiterResource {
         List<RegisterTopic> registerTopicList = registerService.getAllRegister();
         return new  ResponseEntity<>(registerTopicList, HttpStatus.OK);
     }
+    @GetMapping("student/{studentId}")
+    public ResponseEntity<RegisterTopic> getByStudentId(@PathVariable("studentId") Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(registerService.getByStudentId(id));
+    }
 }

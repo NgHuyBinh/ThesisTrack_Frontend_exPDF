@@ -36,6 +36,8 @@ public class GroupStudentService {
         return groupStudent.map(this::convertToDTO);
     }
 
+
+    // lấy thông tin nhóm theo id teacher
     public List<GroupStudentResponseDTO> getGroupStudentsByTeacherId(Integer teacherId) {
         List<GroupStudent> groupStudents = groupStudentRepository.findByTeacherId(teacherId);
         return groupStudents.stream()

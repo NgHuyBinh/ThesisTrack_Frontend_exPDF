@@ -35,6 +35,7 @@ public class GroupStudentResource {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // lấy thông nhóm sinh viên theo id giảng viên
     @GetMapping("/teacher/{teacherId}")
     public ResponseEntity<List<GroupStudentResponseDTO>> getGroupStudentsByTeacherId(@PathVariable Integer teacherId) {
         List<GroupStudentResponseDTO> groupStudents = groupStudentService.getGroupStudentsByTeacherId(teacherId);

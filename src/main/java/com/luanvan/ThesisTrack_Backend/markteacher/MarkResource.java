@@ -30,12 +30,10 @@ public class MarkResource {
     private final SemesterService semesterService;
 
     @Autowired
-    public MarkResource(MarkService markService
-    , TeacherService teacherService
-    , StudentService studentService
-    , SemesterService semesterService) {
+    public MarkResource(MarkService markService, TeacherService teacherService, StudentService studentService,
+            SemesterService semesterService) {
         this.markService = markService;
-        this.teacherService =  teacherService;
+        this.teacherService = teacherService;
         this.studentService = studentService;
         this.semesterService = semesterService;
     }
@@ -87,6 +85,14 @@ public class MarkResource {
     @GetMapping("/semester/{semesterId}")
     public ResponseEntity<List<Mark>> getMarksBySemesterId(@PathVariable Integer semesterId) {
         List<Mark> marks = markService.getMarksBySemesterId(semesterId);
+        return ResponseEntity.ok(marks);
+    }
+
+    // lấy thông tin theo id sinh viên và id giảng viên
+    @GetMapping("/student/{studentId}/teacher/{teacherId}")
+    public ResponseEntity<List<Mark>> getMarksByStudentIdAndTeacherId(@PathVariable Integer studentId,
+            @PathVariable Integer teacherId) {
+        List<Mark> marks = markService.getMarksByStudentIdAndTeacherId(studentId, teacherId);
         return ResponseEntity.ok(marks);
     }
 

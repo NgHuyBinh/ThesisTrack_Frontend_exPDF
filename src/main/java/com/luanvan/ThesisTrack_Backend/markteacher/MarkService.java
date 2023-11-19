@@ -65,7 +65,7 @@ public class MarkService {
         // Kiểm tra đã có điểm của sinh viên trong học kỳ này chưa
         boolean isExistingMark = markRepository.existsByTeacherIdAndStudentIdAndSemesterId(mark.getTeacher().getId(),
                 mark.getStudent().getId(), mark.getSemester().getId());
-                System.out.println(isExistingMark);
+        System.out.println(isExistingMark);
         if (isExistingMark) {
             throw new AlreadyExistsException("Bạn đã chấm điểm cho sinh viên này trước đó rồi.");
         }
@@ -147,19 +147,28 @@ public class MarkService {
         markRepository.save(mark);
     }
 
+    // xóa chấm điểm
     public void deleteMark(Integer id) {
         markRepository.deleteById(id);
     }
 
+    // lấy điểm theo giảng viên
     public List<Mark> getMarksByTeacherId(Integer teacherId) {
         return markRepository.findByTeacherId(teacherId);
     }
 
+    // lấy điểm theo sinh viên
     public List<Mark> getMarksByStudentId(Integer studentId) {
         return markRepository.findByStudentId(studentId);
     }
 
+    // lấy điểm theo học kỳ
     public List<Mark> getMarksBySemesterId(Integer semesterId) {
         return markRepository.findBySemesterId(semesterId);
+    }
+
+    // lấy điểm theo id sinh viên và id giảng viên
+    public List<Mark> getMarksByStudentIdAndTeacherId(Integer studentId, Integer teacherId) {
+        return markRepository.findByStudentIdAndTeacherId(studentId, teacherId);
     }
 }

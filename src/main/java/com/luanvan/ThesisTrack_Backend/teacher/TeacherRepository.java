@@ -11,5 +11,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
     Optional<Teacher> findByNumberTeacher(String numberTeacher);
 
     List<Teacher> findByFacultyId(Integer facultyId);
-
+    
 }

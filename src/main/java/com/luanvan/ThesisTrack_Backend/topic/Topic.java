@@ -23,20 +23,17 @@ public class Topic {
     private String name;
 
     // khóa ngoại với bảng học phần
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
     // khóa ngoại với bảng giảng viên
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    public int getStatus() {
-        return 0;
-    }
 
 
     // private Integer studentId;

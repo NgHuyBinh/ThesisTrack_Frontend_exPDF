@@ -53,5 +53,14 @@ public class RegisterTeacherResource {
         List<RegisterTeacherInfo> registerTeacherInfoList = registerTeacherService.findRegisterTeacherInfoByStatus();
         return ResponseEntity.ok(registerTeacherInfoList);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateStatusRegister(@PathVariable("id") Integer id,@RequestBody ResponseStauts response) {
+        registerTeacherService.updateStatusRegister(id, response);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("student/{studentId}")
+    public ResponseEntity<List<RegisterTeacher>> getRegisterByStudentId(@PathVariable("studentId") Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(registerTeacherService.getRegisterByStudentId(id));
+    }
 
 }

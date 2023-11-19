@@ -78,25 +78,4 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    // thêm vào cho chức năng đăng ký giảng viên hướng dẫn
-    private int status;
-
-    public Integer getStudentName() {
-        return null;
-    }
-
-    // public Student orElse(Object object) {
-    //     return null;
-    // }
-
-    // thêm vào cho chức năng chia nhóm sinh viên
-//    @ManyToOne(optional = true)
-//    @JoinColumn(name="groupstudent_id")
-//    private GroupStudent groupStudent;
-//
 }

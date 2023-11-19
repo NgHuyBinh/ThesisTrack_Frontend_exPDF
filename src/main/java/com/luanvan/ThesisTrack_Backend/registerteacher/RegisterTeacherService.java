@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.luanvan.ThesisTrack_Backend.exception.AlreadyExistsException;
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
@@ -144,6 +145,25 @@ public class RegisterTeacherService {
         }
 
         registerTeacherRepository.save(registerTeacher);
+    }
+    public void updateStatusRegister(Integer id, ResponseStauts response) {
+        RegisterTeacher registerTeacher  = registerTeacherRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Không tồn tại bản đăng ký này"));
+        registerTeacher.setNote(response.getNote());
+        registerTeacher.setStatus(response.getStatus());
+        registerTeacherRepository.save(registerTeacher);
+        List<RegisterTeacher> registerTeachers = registerTeacherRepository.findAll();
+        for(RegisterTeacher r : registerTeachers) {
+            if(response.getStatus() == 1) {
+                if(r.getStatus() !=1 &&registerTeacher.getStudent().getId() == r.getStudent().getId()) {
+                    registerTeacherRepository.deleteById(r.getId());
+                }
+            }
+            
+        }
+    }
+    public List<RegisterTeacher> getRegisterByStudentId(Integer id) {
+        return registerTeacherRepository.findByStudentId(id);
     }
 
 }

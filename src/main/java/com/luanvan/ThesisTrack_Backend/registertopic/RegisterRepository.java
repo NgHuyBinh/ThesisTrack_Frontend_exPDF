@@ -16,4 +16,5 @@ public interface RegisterRepository extends JpaRepository<RegisterTopic, Integer
 //    List<RegisterTopic> findAll();
     // Optional<RegisterTopic> findByStudentIdAndSemesterId(Integer studentId, Integer semesterId);
     // List<RegisterTopic> findByTeacherId(Integer id);
+    Optional<RegisterTopic> findByStudentId(Integer studentId);
 }

@@ -39,8 +39,7 @@ public class StudentResource {
             student.get().getBirthday(),
             student.get().getGender(),
             student.get().getClassroom(),
-            student.get().getTeacher(),
-            student.get().getStatus()
+            student.get().getFaculty()
             ) ;
 
             return ResponseEntity.status(HttpStatus.OK).body(studentResponseDTO);

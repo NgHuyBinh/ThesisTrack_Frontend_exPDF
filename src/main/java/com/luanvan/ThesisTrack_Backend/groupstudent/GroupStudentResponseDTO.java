@@ -14,8 +14,8 @@ public class GroupStudentResponseDTO {
     private String code;
     private String name;
     private Integer teacherId;
-    public Teacher getTeacher() {
-        return null;
-    }
+    // public Teacher getTeacher() {
+    //     return null;
+    // }
 
 }

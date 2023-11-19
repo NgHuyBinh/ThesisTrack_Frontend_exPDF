@@ -13,7 +13,7 @@ import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 public interface RegisterTeacherRepository extends JpaRepository<RegisterTeacher, Integer> {
     
     List<RegisterTeacher> findByTeacherId(Integer teacherId);
-
+    List<RegisterTeacher> findByStudentId(Integer studentId);
     boolean existsByStudentAndTeacherAndStatus(Student student, Teacher teacher, Integer status);
 
     boolean existsByStudentIdAndTeacherIdAndSemesterId(Integer studentId, Integer teacherId, Integer semesterId);

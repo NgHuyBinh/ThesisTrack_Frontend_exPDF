@@ -2,6 +2,7 @@ package com.luanvan.ThesisTrack_Backend.student;
 
 import java.time.LocalDate;
 
+import com.luanvan.ThesisTrack_Backend.faculty.Faculty;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class StudentResponseDTO {
 
     private String classroom;
 
-    private Teacher teacher;
+    private Faculty faculty;
 
-    private Integer status;
+    // private Integer status;
 }

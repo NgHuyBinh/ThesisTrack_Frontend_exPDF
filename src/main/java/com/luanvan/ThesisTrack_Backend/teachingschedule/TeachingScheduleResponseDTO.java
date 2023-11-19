@@ -49,27 +49,27 @@ public class TeachingScheduleResponseDTO {
     // public void setSemester(Integer id2) {
     // }
 
-    public TeachingScheduleResponseDTO(Integer integer,
-            String room, Integer week,
-            String thu, LocalDate day,
-            String period, String note,
-            String schoolYear, Integer semester_number,
-            Integer teacherId,
-            String code, String name,
-            String string2, Integer integer2) {
-        this.room = room;
-        this.week = week;
-        this.thu = thu;
-        this.day = day;
-        this.period = period;
-        this.note = note;
-        this.schoolYear = schoolYear;
-        this.semester_number = semester_number;
-        this.teacherId = teacherId;
-        this.code = code;
-        this.name = name;
+    // public TeachingScheduleResponseDTO(Integer integer,
+    //         String room, Integer week,
+    //         String thu, LocalDate day,
+    //         String period, String note,
+    //         String schoolYear, Integer semester_number,
+    //         Integer teacherId,
+    //         String code, String name,
+    //         String string2, Integer integer2) {
+    //     this.room = room;
+    //     this.week = week;
+    //     this.thu = thu;
+    //     this.day = day;
+    //     this.period = period;
+    //     this.note = note;
+    //     this.schoolYear = schoolYear;
+    //     this.semester_number = semester_number;
+    //     this.teacherId = teacherId;
+    //     this.code = code;
+    //     this.name = name;
 
-    }
+    // }
 
     public void setTeacher_id(Teacher teacher) {
     }

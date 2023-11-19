@@ -66,5 +66,11 @@ public class TeacherResource {
         }
     }
 
+    @GetMapping("/all/faculty/{facultyId}")
+    public ResponseEntity<List<Teacher>> getAllTeacher(@PathVariable("facultyId") Integer id) {
+        List<Teacher> teachers = teacherService.getAllTeacher(id);
+        return ResponseEntity.ok(teachers);
+    }
+
 
 }

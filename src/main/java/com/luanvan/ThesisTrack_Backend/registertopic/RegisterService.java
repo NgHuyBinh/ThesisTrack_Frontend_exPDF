@@ -66,11 +66,9 @@ public class RegisterService {
             for (RegisterTopic r : registerTopics) {
                 Student student = studentRepository.findById(r.getStudent().getId())
                         .orElseThrow(() -> new NotFoundException("Không tồn tại sinh viên"));
-                Teacher teacher = teacherRepository.findById(student.getTeacher().getId())
-                        .orElseThrow(() -> new NotFoundException("Không tồn tại giảng viên này"));
-                if (teacherId == teacher.getId()) {
+                
                     filteredTopics.add(r);
-                }
+                
             }
         }
 
@@ -119,5 +117,9 @@ public class RegisterService {
             // registerTopic.getTopic().setId(1);
             
         registerRepository.save(registerTopic);
+    }
+    public RegisterTopic getByStudentId(Integer id) {
+        return registerRepository.findByStudentId(id).
+        orElseThrow(() -> new NotFoundException("Không có sinh viên với id: "+id));
     }
 }

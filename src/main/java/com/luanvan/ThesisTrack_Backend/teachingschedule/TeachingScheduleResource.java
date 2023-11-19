@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
 import java.util.List;
 
@@ -28,10 +29,14 @@ public class TeachingScheduleResource {
 
     // lấy tất cả 
     @GetMapping("/all")
-    public ResponseEntity<List<TeachingScheduleResponseDTO>> getAllTeachingSchedules() {
-        List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService.getAllTeachingSchedules();
-        return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    public List<TeachingSchedule> getAllTeachingSchedules() {
+        return teachingScheduleService.getAllTeachingSchedules();
     }
+    // @GetMapping("/all")
+    // public ResponseEntity<List<TeachingScheduleResponseDTO>> getAllTeachingSchedules() {
+    //     List<TeachingScheduleResponseDTO> teachingSchedules = teachingScheduleService.getAllTeachingSchedules();
+    //     return new ResponseEntity<>(teachingSchedules, HttpStatus.OK);
+    // }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeachingScheduleResponseDTO> getTeachingScheduleById(@PathVariable Integer id) {
