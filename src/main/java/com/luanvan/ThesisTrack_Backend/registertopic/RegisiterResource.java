@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202"  })
 @RestController
 @RequestMapping("api/v1/registertopic")
 public class RegisiterResource {

@@ -2,7 +2,6 @@ package com.luanvan.ThesisTrack_Backend.registertopic;
 
 import com.luanvan.ThesisTrack_Backend.semester.Semester;
 import com.luanvan.ThesisTrack_Backend.student.Student;
-import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 import com.luanvan.ThesisTrack_Backend.topic.Topic;
 
 // import jakarta.persistence.Column;
@@ -33,8 +32,9 @@ public class RegisterTopic {
     private Student student;
 
     //Đăng ký đề tài nào //có 38 thì ko  có 46
-    @ManyToOne(optional = true) // Có thể null để cho sinh viên tự đăng ký
-    @JoinColumn(name="topic_id")
+//    @ManyToOne(optional = true) // Có thể null để cho sinh viên tự đăng ký
+    @ManyToOne
+    @JoinColumn(name="topic_id", nullable = true)
     private Topic topic;
 
     @ManyToOne

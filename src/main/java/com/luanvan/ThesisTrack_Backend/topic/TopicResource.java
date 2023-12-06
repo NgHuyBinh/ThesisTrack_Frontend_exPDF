@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/topics")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201", "http://localhost:4202" })
 public class TopicResource {
 
     @Autowired
@@ -31,7 +31,7 @@ public class TopicResource {
 
      @PostMapping("/add")
      public ResponseEntity<Void> addTopic(@RequestBody Topic topic) {
-         topicService.saveTopic (topic);
+         topicService.saveTopic(topic);
          return ResponseEntity.status(HttpStatus.CREATED).build();
      }
 

@@ -11,18 +11,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+
 // ,"http://localhost:4401"
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202" })
 @RequestMapping("api/v1/email")
 public class EmailResource {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("")
+    @PostMapping("/calender")
     public ResponseEntity<?> sendEmail(@Valid @RequestBody Email email, @RequestParam String studentName) {
-        emailService.sendEmail(email,studentName);
+        emailService.sendEmail(email, studentName);
         return ResponseEntity.ok().build();
-    }    
+    }
+
+    @PostMapping("/mark")
+    public ResponseEntity<?> sendMark(@Valid @RequestBody Email email, @RequestParam String studentName) {
+        emailService.sendEmail(email, studentName);
+        return ResponseEntity.ok().build();
+    }
 
 }

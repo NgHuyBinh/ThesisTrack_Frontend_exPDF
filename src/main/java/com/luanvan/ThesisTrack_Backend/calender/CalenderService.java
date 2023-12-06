@@ -36,24 +36,26 @@ public class CalenderService {
         return calenderRepository.findByWeek(week);
     }
 
-    public List<Calender> getCalendarItemsByThu(String thu) {
-        return calenderRepository.findByThu(thu);
-    }
+    // public List<Calender> getCalendarItemsByThu(String thu) {
+    //     return calenderRepository.findByThu(thu);
+    // }
 
     public List<Calender> getCalendarItemsByDay(LocalDate day) {
         return calenderRepository.findByDay(day);
     }
 
-    public List<Calender> findDuplicateCalendarItems(Integer week, String thu, LocalDate day, String room,
+    public List<Calender> findDuplicateCalendarItems(Integer week, LocalDate day, String room,
             String period) {
-        return calenderRepository.findDuplicates(week, thu, day, room, period);
+        return calenderRepository.findDuplicates(week, day, room, period);
     }
 
+    // tạo lịch mới 
     public void createCalendarItem(Calender calendar) {
-        // Check for duplicates
+
+        // kiểm tra trùng trong csdl
         List<Calender> duplicates = calenderRepository.findDuplicates(
                 calendar.getWeek(),
-                calendar.getThu(),
+                // calendar.getThu(),
                 calendar.getDay(),
                 calendar.getRoom(),
                 calendar.getPeriod());
@@ -78,7 +80,7 @@ public class CalenderService {
         // kiểm tra trùng lập thông tin nhập vào
         List<Calender> duplicates = findDuplicateCalendarItems(
             updatedCalendar.getWeek(),
-            updatedCalendar.getThu(),
+            // updatedCalendar.getThu(),
             updatedCalendar.getDay(),
             updatedCalendar.getRoom(),
             updatedCalendar.getPeriod()
@@ -94,7 +96,7 @@ public class CalenderService {
         // cập nhật lại các chỉnh sửa
         existingCalendar.setRoom(updatedCalendar.getRoom());
         existingCalendar.setWeek(updatedCalendar.getWeek());
-        existingCalendar.setThu(updatedCalendar.getThu());
+        // existingCalendar.setThu(updatedCalendar.getThu());
         existingCalendar.setDay(updatedCalendar.getDay());
         existingCalendar.setPeriod(updatedCalendar.getPeriod());
         existingCalendar.setNote(updatedCalendar.getNote());

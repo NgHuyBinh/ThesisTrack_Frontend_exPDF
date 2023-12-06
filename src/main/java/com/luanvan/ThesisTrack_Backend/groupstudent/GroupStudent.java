@@ -13,24 +13,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 
-// chia nhóm cho sinh viên 
-
+// chia nhóm cho sinh viên
 public class GroupStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     // mã nhóm sinh viên báo cáo
     private String code;
-    
-    // tên nhóm sinh viên báo cáo vd: Thầy Tuấn nhóm 1, nhóm 2,..
-    private String name;
+
+    // // tên nhóm sinh viên báo cáo vd: Thầy Tuấn nhóm 1, nhóm 2,..
+    // private String name;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
+    private String note = new String();
 
 }

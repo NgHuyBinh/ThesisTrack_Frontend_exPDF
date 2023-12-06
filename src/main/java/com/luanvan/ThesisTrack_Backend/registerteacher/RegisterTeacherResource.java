@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 // import jakarta.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202"  })
 @RestController
 @RequestMapping("api/v1/registerteacher")
 public class RegisterTeacherResource {

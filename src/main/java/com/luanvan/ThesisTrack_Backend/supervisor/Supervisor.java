@@ -1,5 +1,6 @@
 package com.luanvan.ThesisTrack_Backend.supervisor;
 
+import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudent;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
 import jakarta.persistence.Entity;
@@ -35,5 +36,10 @@ public class Supervisor {
     @JoinColumn(name = "uyvien")
     private Teacher teach3;  
 
+    @ManyToOne
+    @JoinColumn(name = "groupstudent_id")
+    private GroupStudent groupStudent;
+
     private Integer status = 0;
+
 }

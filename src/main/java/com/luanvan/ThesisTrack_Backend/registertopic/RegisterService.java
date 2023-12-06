@@ -10,16 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luanvan.ThesisTrack_Backend.exception.AlreadyExistsException;
-// import com.luanvan.ThesisTrack_Backend.exception.InvalidValueException;
+
 import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 import com.luanvan.ThesisTrack_Backend.semester.Semester;
 import com.luanvan.ThesisTrack_Backend.semester.SemesterRepository;
 import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.student.StudentRepository;
-import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 import com.luanvan.ThesisTrack_Backend.teacher.TeacherRepository;
-import com.luanvan.ThesisTrack_Backend.topic.Topic;
-// import com.luanvan.ThesisTrack_Backend.topic.Topic;
 import com.luanvan.ThesisTrack_Backend.topic.TopicRepository;
 
 @Service
@@ -107,6 +104,7 @@ public class RegisterService {
                         && topicRepository.findByName(registerTopic.getTopicName()).isPresent()) {
                     throw new AlreadyExistsException("Có sinh viên đã đăng ký đề tài này rồi");
                 }
+            // registerTopic.getTopic().setId(35);
             }
 
         // registerTopic.getTopic().setId(1);

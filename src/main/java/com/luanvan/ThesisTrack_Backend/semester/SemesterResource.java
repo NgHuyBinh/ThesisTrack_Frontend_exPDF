@@ -7,7 +7,7 @@
 
  @RestController
  @RequestMapping("api/v1/semesters")
- @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
+ @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202"  })
  public class SemesterResource {
 
      @Autowired

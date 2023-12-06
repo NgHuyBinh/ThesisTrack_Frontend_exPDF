@@ -25,11 +25,12 @@ public class Calender {
 
     private Integer week;
 
-    private String thu;
+    // private String thu;
 
     private LocalDate day;
 
     private String period;
 
     private String note = new String();
+    
 }

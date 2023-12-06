@@ -23,6 +23,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    // thông báo lịch báo cáo
     public void sendEmail(Email email, String studentName) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
@@ -143,17 +144,154 @@ public class EmailService {
                     "        </table>\r\n" + //
                     "\r\n" + //
                     "        <div class=\"footer\">\r\n" + //
-                    "            <p>LỊCH BÁO CÁO LUẬN VĂN TỐT NGHIỆP TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG</p>\r\n" + //
+                    "            <p>LỊCH BÁO CÁO LUẬN VĂN TỐT NGHIỆP TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG</p>\r\n"
+                    + //
                     "            <p>\r\n" + //
                     "                Khu 2, đường 3/2, Phường Xuân Khánh, Q. Ninh Kiều, TP. Cần Thơ, Việt Nam\r\n" + //
                     "            </p>\r\n" + //
                     "            <p>\r\n" + //
-                    "                Điện thoại: 84 0292 3 734713 - 0292 3 831301; Fax: 84 0292 3830841; Email: office@cit.ctu.edu.vn\r\n" + //
+                    "                Điện thoại: 84 0292 3 734713 - 0292 3 831301; Fax: 84 0292 3830841; Email: office@cit.ctu.edu.vn\r\n"
+                    + //
                     "            </p>\r\n" + //
                     "        </div>\r\n" + //
                     "    </div>\r\n" + //
                     "</body>\r\n" + //
-                    "</html>";  
+                    "</html>";
+
+            helper.setText(htmlContent, true);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // thông báo kết quả sinh viên
+    public void sendMark(Email email, String studentName) {
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("thesistrack2023@gmail.com");
+            helper.setTo(email.getToEmail());
+            helper.setSubject(email.getSubject());
+            // String test = "<p>Chạy lên</p>";
+            // Tạo nội dung HTML với các thẻ và CSS tùy chỉnh
+            String htmlContent = "<!DOCTYPE html>\r\n" + //
+                    "<html>\r\n" + //
+                    "\r\n" + //
+                    "<head>\r\n" + //
+                    "    <style>\r\n" + //
+                    "        /* CSS cho phần nội dung email */\r\n" + //
+                    "        body {\r\n" + //
+                    "            font-family: Arial, sans-serif;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        .email-container {\r\n" + //
+                    "            max-width: 800px;\r\n" + //
+                    "            margin: 0 auto;\r\n" + //
+                    "            padding: 20px;\r\n" + //
+                    "            background-color: #f0f0f0;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        .header {\r\n" + //
+                    "            background-color: #007bff;\r\n" + //
+                    "            color: #ffffff;\r\n" + //
+                    "            text-align: center;\r\n" + //
+                    "            padding: 10px;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        table {\r\n" + //
+                    "            width: 100%;\r\n" + //
+                    "            margin-bottom: 20px;\r\n" + //
+                    "            border: 1px solid #ddd;\r\n" + //
+                    "            border-collapse: collapse;\r\n" + //
+                    "            border: none;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        th,\r\n" + //
+                    "        td {\r\n" + //
+                    "            padding: 10px;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        .footer {\r\n" + //
+                    "            background-color: #007bff;\r\n" + //
+                    "            color: #ffffff;\r\n" + //
+                    "            text-align: center;\r\n" + //
+                    "            padding: 10px;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        .title {\r\n" + //
+                    "            font-weight: bold;\r\n" + //
+                    "        }\r\n" + //
+                    "\r\n" + //
+                    "        * {\r\n" + //
+                    "            margin: 0;\r\n" + //
+                    "            padding: 0;\r\n" + //
+                    "        }\r\n" + //
+                    "    </style>\r\n" + //
+                    "</head>\r\n" + //
+                    "\r\n" + //
+                    "<body>\r\n" + //
+                    "    <div class=\"email-container\">\r\n" + //
+                    "        <div class=\"header\">\r\n" + //
+                    "            <h3 style=\"font-weight: bold\">\r\n" + //
+                    "                LỊCH BÁO CÁO LUẬN VĂN CỦA BẠN\r\n" + //
+                    "            </h3>\r\n" + //
+                    "        </div>\r\n" + //
+                    "        <table style=\"background-color: white\">\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Mã số sinh viên:</td>\r\n" + //
+                    "                <td>[Mã số sinh viên của bạn]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Tên:</td>\r\n" + //
+                    "                <td>[Tên của bạn]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Ngày sinh:</td>\r\n" + //
+                    "                <td>[Ngày sinh của bạn]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Giới tính:</td>\r\n" + //
+                    "                <td>[Giới tính của bạn]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Lớp học:</td>\r\n" + //
+                    "                <td>[Lớp học của bạn]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Điểm giảng viên 1: </td>\r\n" + //
+                    "                <td>[điểm]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Điểm giảng viên 2: </td>\r\n" + //
+                    "                <td>[điểm]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Điểm giảng viên 3: </td>\r\n" + //
+                    "                <td>[điểm]</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "            <tr>\r\n" + //
+                    "                <td class=\"title\">Điểm tổng: </td>\r\n" + //
+                    "                <td>phòng</td>\r\n" + //
+                    "            </tr>\r\n" + //
+                    "        </table>\r\n" + //
+                    "\r\n" + //
+                    "        <div class=\"footer\">\r\n" + //
+                    "            <p>LỊCH BÁO CÁO LUẬN VĂN TỐT NGHIỆP TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG</p>\r\n"
+                    + //
+                    "            <p>\r\n" + //
+                    "                Khu 2, đường 3/2, Phường Xuân Khánh, Q. Ninh Kiều, TP. Cần Thơ, Việt Nam\r\n" + //
+                    "            </p>\r\n" + //
+                    "            <p>\r\n" + //
+                    "                Điện thoại: 84 0292 3 734713 - 0292 3 831301; Fax: 84 0292 3830841; Email: office@cit.ctu.edu.vn\r\n"
+                    + //
+                    "            </p>\r\n" + //
+                    "        </div>\r\n" + //
+                    "    </div>\r\n" + //
+                    "</body>\r\n" + //
+                    "</html>";
 
             helper.setText(htmlContent, true);
 

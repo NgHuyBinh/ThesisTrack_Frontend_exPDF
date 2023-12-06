@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/v1/teacher")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:4201"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:4201", "http://localhost:4202" })
 public class TeacherResource {
     @Autowired
     private TeacherService teacherService;

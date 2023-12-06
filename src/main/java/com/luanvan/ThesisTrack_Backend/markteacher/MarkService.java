@@ -171,4 +171,60 @@ public class MarkService {
     public List<Mark> getMarksByStudentIdAndTeacherId(Integer studentId, Integer teacherId) {
         return markRepository.findByStudentIdAndTeacherId(studentId, teacherId);
     }
+
+    // chỉnh sửa điểm sinh viên
+    public void updateMark(Integer id, Mark updatedMark) {
+        Mark existingMark = markRepository.findById(id).orElse(null);
+
+        if (existingMark != null) {
+            // Cập nhật thông tin giáo viên
+            // Teacher teacher =
+            // teacherRepository.findById(updatedMark.getTeacher().getId())
+            // .orElseThrow(() -> new NotFoundException("Không tồn tại giảng viên với ID " +
+            // updatedMark.getTeacher().getId()));
+            // existingMark.setTeacher(teacher);
+
+            // // Cập nhật thông tin sinh viên
+            // Student student =
+            // studentRepository.findById(updatedMark.getStudent().getId())
+            // .orElseThrow(() -> new NotFoundException("Không tồn tại sinh viên với ID " +
+            // updatedMark.getStudent().getId()));
+            // existingMark.setStudent(student);
+
+            // // Cập nhật thông tin học kỳ
+            // Semester semester =
+            // semesterRepository.findById(updatedMark.getSemester().getId())
+            // .orElseThrow(() -> new NotFoundException("Không tồn tại học kỳ với ID " +
+            // updatedMark.getSemester().getId()));
+            // existingMark.setSemester(semester);
+
+            // Cập nhật thời gian bắt đầu và kết thúc
+            existingMark.setStartTime(updatedMark.getStartTime());
+            existingMark.setEndTime(updatedMark.getEndTime());
+
+            // Cập nhật điểm và ghi chú
+            existingMark.setMark11(updatedMark.getMark11());
+            existingMark.setNote11(updatedMark.getNote11());
+            existingMark.setMark12(updatedMark.getMark12());
+            existingMark.setNote12(updatedMark.getNote12());
+            existingMark.setMark13(updatedMark.getMark13());
+            existingMark.setNote13(updatedMark.getNote13());
+            existingMark.setMark14(updatedMark.getMark14());
+            existingMark.setNote14(updatedMark.getNote14());
+            existingMark.setMark15(updatedMark.getMark15());
+            existingMark.setNote15(updatedMark.getNote15());
+            existingMark.setMark2(updatedMark.getMark2());
+            existingMark.setNote2(updatedMark.getNote2());
+            existingMark.setMark21(updatedMark.getMark21());
+            existingMark.setNote21(updatedMark.getNote21());
+            existingMark.setMark22(updatedMark.getMark22());
+            existingMark.setNote22(updatedMark.getNote22());
+            existingMark.setMark23(updatedMark.getMark23());
+            existingMark.setNote23(updatedMark.getNote23());
+            existingMark.setSumMark(updatedMark.getSumMark());
+
+            // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
+            markRepository.save(existingMark);
+        }
+    }
 }

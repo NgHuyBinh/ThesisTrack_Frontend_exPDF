@@ -11,8 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/calender")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
+@RequestMapping("api/v1/calender")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202"  })
 
 public class CalenderResource {
     private final CalenderService calenderService;
@@ -37,10 +37,6 @@ public class CalenderResource {
         return calenderService.getCalendarItemsByWeek(week);
     }
 
-    @GetMapping("/thu/{thu}")
-    public List<Calender> getCalendarItemsByThu(@PathVariable String thu) {
-        return calenderService.getCalendarItemsByThu(thu);
-    }
 
     @GetMapping("/day/{day}")
     public List<Calender> getCalendarItemsByDay(@PathVariable LocalDate day) {
