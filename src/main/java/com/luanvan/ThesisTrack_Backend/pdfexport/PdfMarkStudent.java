@@ -29,7 +29,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/pdfmarks")
 public class PdfMarkStudent {
-
     private static Logger logger = LoggerFactory.getLogger(PdfResource.class);
     private final MarkService markService;
 
@@ -41,7 +40,7 @@ public class PdfMarkStudent {
     // xuất thẳng file pdf luôn
     @GetMapping("/marks")
     public ResponseEntity<byte[]> generateMarkStudentPdf() {
-        String fontPath = "src/main/resources/times.ttf";
+        String fontPath = "src/main/resources/timess.ttf";
         List<Mark> marks = markService.getAllMarks();
         logger.info("lisst regoter: " + marks);
         logger.info("lisst length: " + marks.size());
@@ -70,14 +69,14 @@ public class PdfMarkStudent {
             table.setWidthPercentage(100);
 
             // Độ rộng tương đối của từng cột (tổng của độ rộng này cần phải bằng 100%)
-            float[] columnWidths = { 0.7f, 1.5f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f };
+            float[] columnWidths = { 0.5f, 1f, 1.8f, 2f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 1f };
             table.setWidths(columnWidths);
 
             // Tiêu đề cho từng cột
             PdfPCell cell1 = new PdfPCell(new Phrase("STT", contentFont));
             PdfPCell cell15 = new PdfPCell(new Phrase("MSSV", contentFont));
-            PdfPCell cell2 = new PdfPCell(new Phrase("SV", contentFont));
-            PdfPCell cell3 = new PdfPCell(new Phrase("GV", contentFont));
+            PdfPCell cell2 = new PdfPCell(new Phrase("Họ tên sinh viên", contentFont));
+            PdfPCell cell3 = new PdfPCell(new Phrase("Họ tên giảng viên", contentFont));
             PdfPCell cell5 = new PdfPCell(new Phrase("Hình thức QBC", contentFont));
             PdfPCell cell6 = new PdfPCell(new Phrase("Tóm tắt", contentFont));
             PdfPCell cell7 = new PdfPCell(new Phrase("Giới thiệu", contentFont));

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CalenderRepository extends JpaRepository <Calender, Integer> {
-    
-    // kiểm tra trùng dữ liệu
     @Query("SELECT c FROM Calender c WHERE c.week = :week AND c.day = :day AND c.room = :room AND c.period = :period")
     List<Calender> findDuplicates(
         @Param("week") Integer week,
@@ -21,14 +19,8 @@ public interface CalenderRepository extends JpaRepository <Calender, Integer> {
         @Param("room") String room,
         @Param("period") String period
     );
-
     List<Calender> findByRoom(String room);
-
     List<Calender> findByWeek(Integer week);
-
-    // List<Calender> findByThu(String thu);
-
     List<Calender> findByDay(LocalDate day);
-
     Optional<Calender> findById(Integer id);
 }

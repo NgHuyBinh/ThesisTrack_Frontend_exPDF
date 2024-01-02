@@ -74,7 +74,7 @@ public class PdfResource {
 
             // Tiêu đề cho từng cột
             PdfPCell cell1 = new PdfPCell(new Phrase("STT", contentFont));
-            PdfPCell cell2 = new PdfPCell(new Phrase("Khoa", contentFont));
+            PdfPCell cell2 = new PdfPCell(new Phrase("Chuyên ngành", contentFont));
             PdfPCell cell3 = new PdfPCell(new Phrase("Tên sinh viên", contentFont));
             PdfPCell cell4 = new PdfPCell(new Phrase("Đề tài sinh viên", contentFont));
             PdfPCell cell5 = new PdfPCell(new Phrase("Đề tài giảng viên", contentFont));
@@ -99,7 +99,7 @@ public class PdfResource {
             for (RegisterTopic registerTopic : registerTopics) {
                 String idTopicName = "_";
                 if (registerTopic.getTopic() == null) {
-                    idTopicName = "_";
+                    idTopicName = " ";
                 } else {
                     idTopicName = registerTopic.getTopic().getName();
                 }

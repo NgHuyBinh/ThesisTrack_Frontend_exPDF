@@ -54,7 +54,13 @@ public class RegisterTeacherService {
         r.setStatus(registerTeacher.getStatus());
         registerTeacherRepository.save(r);
     }
-
+    public void updateStatus2(Integer id, RegisterTeacherRequestDTO registerTeacher) {
+        RegisterTeacher r = registerTeacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Không tồn tại đăng ký giảng viên"));
+        r.setNote(registerTeacher.getNote());
+        r.setStatus(registerTeacher.getStatus());
+        registerTeacherRepository.save(r);
+    }
     public List<RegisterTeacherResponseDTO> getAllRegisterTeachers() {
         // Sử dụng registerTeacherRepository để lấy danh sách tất cả đăng ký giảng viên
         List<RegisterTeacher> registerTeachers = registerTeacherRepository.findAll();

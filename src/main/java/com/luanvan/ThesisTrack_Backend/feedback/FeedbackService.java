@@ -85,27 +85,6 @@ public class FeedbackService {
 
         return "Không tìm thấy phản hồi với ID " + id + ". Cập nhật thất bại!";
     }
-    // public Feedback updateFeedback(Integer id, Feedback updatedFeedback) {
-    // // Kiểm tra xem feedback có tồn tại không
-    // Feedback existingFeedback = feedbackRepository.findById(id).orElse(null);
-    // if (existingFeedback != null) {
-    // // Cập nhật các thông tin cần thiết
-    // if (updatedFeedback.getNote() != null) {
-    // existingFeedback.setNote(updatedFeedback.getNote());
-    // }
-
-    // if (updatedFeedback.getReply() != null) {
-    // existingFeedback.setReply(updatedFeedback.getReply());
-    // }
-
-    // // Có thể cập nhật thêm các thông tin khác tùy ý
-    // existingFeedback.setStatus(1);
-
-    // // Lưu lại vào cơ sở dữ liệu
-    // return feedbackRepository.save(existingFeedback);
-    // }
-    // return null; // Hoặc bạn có thể ném ra một exception tùy theo yêu cầu
-    // }
 
     public List<Feedback> getFeedbacksByStudentId(Integer studentId) {
         // Sử dụng phương thức mới thêm vào repository

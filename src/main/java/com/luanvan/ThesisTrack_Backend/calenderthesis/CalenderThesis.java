@@ -1,8 +1,7 @@
-package com.luanvan.ThesisTrack_Backend.addgroupstudent;
+package com.luanvan.ThesisTrack_Backend.calenderthesis;
 
-
+import com.luanvan.ThesisTrack_Backend.calender.Calender;
 import com.luanvan.ThesisTrack_Backend.groupstudent.GroupStudent;
-import com.luanvan.ThesisTrack_Backend.student.Student;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,18 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class AddGroupStudent {
+public class CalenderThesis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
+    @JoinColumn(name = "calender_id")
+    private Calender calender;
     @ManyToOne
-    @JoinColumn(name = "groupstudent_id")
+    @JoinColumn(name = "groupS_id")
     private GroupStudent groupStudent;
-    
-}
 
+}

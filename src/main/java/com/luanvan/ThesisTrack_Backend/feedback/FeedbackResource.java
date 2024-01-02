@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/feedbacks")
+@RequestMapping("api/v1/feedbacks")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202"  })
 public class FeedbackResource {
 
@@ -50,30 +50,12 @@ public class FeedbackResource {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // @PostMapping("/add")
-    // public ResponseEntity<?> createFeedback(@RequestBody Feedback feedback) {
-    // try {
-    // feedbackService.createFeedback(feedback);
-    // return ResponseEntity.status(HttpStatus.CREATED).build();
-    // } catch (IllegalArgumentException e) {
-    // // Xử lý lỗi khi kiểm tra dữ liệu không hợp lệ
-    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    // }
-    // }
-
     // chỉnh sửa , có thể ko cần chỉnh sửa
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> updateFeedback(@PathVariable Integer id, @RequestBody Feedback updatedFeedback) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateFeedback(@PathVariable Integer id, @RequestBody Feedback updatedFeedback) {
         String resultMessage = feedbackService.updateFeedback(id, updatedFeedback);
-        return ResponseEntity.ok(resultMessage);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
-    // @PatchMapping("/{id}")
-    // public ResponseEntity<Feedback> updateFeedback(@PathVariable Integer id,
-    // @RequestBody Feedback updatedFeedback) {
-    // Feedback updated = feedbackService.updateFeedback(id, updatedFeedback);
-    // return updated != null ? ResponseEntity.ok(updated) :
-    // ResponseEntity.notFound().build();
-    // }
 
     // xóa phản hồi
     @DeleteMapping("/{id}")

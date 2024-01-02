@@ -25,8 +25,6 @@ public class Calender {
 
     private Integer week;
 
-    // private String thu;
-
     private LocalDate day;
 
     private String period;

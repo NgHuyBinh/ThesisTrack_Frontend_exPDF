@@ -3,14 +3,7 @@ package com.luanvan.ThesisTrack_Backend.groupstudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // import com.luanvan.ThesisTrack_Backend.exception.NotFoundException;
 
@@ -19,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/groupstudents")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201" })
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "http://localhost:4202" })
 public class GroupStudentResource {
 
     @Autowired
@@ -46,10 +39,15 @@ public class GroupStudentResource {
     }
 
     // tạo nhóm sinh viên báo cáo 
+    // @PostMapping("/add")
+    // public ResponseEntity<Void> addGroupStudent(@RequestBody GroupStudent groupStudent) {
+    //     groupStudentService.addGroupStudent(groupStudent);
+    //     return ResponseEntity.status(HttpStatus.CREATED).build();
+    // }
     @PostMapping("/add")
-    public ResponseEntity<Void> addGroupStudent(@RequestBody GroupStudent groupStudent) {
-        groupStudentService.addGroupStudent(groupStudent);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<GroupStudent> addGroupStudent(@RequestBody GroupStudent groupStudent) {
+        GroupStudent addedGroupStudent = groupStudentService.addGroupStudent(groupStudent);
+        return new ResponseEntity<>(addedGroupStudent, HttpStatus.CREATED);
     }
     
     // xóa nhóm sinh viên 
@@ -58,5 +56,19 @@ public class GroupStudentResource {
         groupStudentService.deleteGroup(groupId);
         return ResponseEntity.noContent().build();
     }
+
+    // chỉnh sửa nhóm sinh viên
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateGroup(@PathVariable Integer id, @RequestBody GroupStudent update){
+        String resultMessage = groupStudentService.updateGroups(id, update);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+//    @PostMapping("addgroup")
+    // @PostMapping("/add-request")
+    // public ResponseEntity<Void> addGroupStudent(@RequestBody GroupStudentRequestDTO requestDTO) {
+    //     groupStudentService.addGroupStudent(requestDTO);
+    //     return  ResponseEntity.status(HttpStatus.CREATED).build();
+    // }
 
 }

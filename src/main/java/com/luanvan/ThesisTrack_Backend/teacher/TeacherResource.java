@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 // import com.luanvan.ThesisTrack_Backend.teacher.TeacherResponseDTO;
 
 @RestController
@@ -17,7 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class TeacherResource {
     @Autowired
     private TeacherService teacherService;
+    @GetMapping("all")
+    public ResponseEntity<List<TeacherResponseDTO>> getAllTeacher(){
+            return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.getAllTeacher());
 
+    }
     @GetMapping
     public ResponseEntity<TeacherResponseDTO> getTeacherByNoTeacher(@RequestParam("numberTeacher") String numberTeacher){
         Optional<Teacher> teacher = teacherService.getTeacherByNoTeacher(numberTeacher);

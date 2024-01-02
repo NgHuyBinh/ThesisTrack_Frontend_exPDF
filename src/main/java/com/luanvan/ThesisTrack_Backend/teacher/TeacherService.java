@@ -44,6 +44,24 @@ public class TeacherService {
     public List<Teacher> getTeachersByFaculty(Integer facultyId) {
         return teacherRepository.findByFacultyId(facultyId);
     }
+    public List<TeacherResponseDTO> getAllTeacher() {
+        List<Teacher> teachers = teacherRepository.findAll();
+        List<TeacherResponseDTO> teacherResponseDTOs = new ArrayList<>();
+        for(Teacher t : teachers) {
+            TeacherResponseDTO teacherResponseDTO = new TeacherResponseDTO();
+            teacherResponseDTO.setAddress(t.getAddress());
+            teacherResponseDTO.setBirthday(t.getBirthday());
+            teacherResponseDTO.setEmail(t.getEmail());
+            teacherResponseDTO.setGender(t.getGender());
+            teacherResponseDTO.setId(t.getId());
+            teacherResponseDTO.setMajor(t.getMajor());
+            teacherResponseDTO.setName(t.getName());
+            teacherResponseDTO.setNumberTeacher(t.getNumberTeacher());
+            teacherResponseDTO.setPhone(t.getPhone());
+            teacherResponseDTOs.add(teacherResponseDTO);
+        }
+        return teacherResponseDTOs;
+    }
 
 // public List<TeacherResponseDTO> getTeachersByFaculty(Integer facultyId) {
 //     List<Teacher> teachers = teacherRepository.findByFacultyId(facultyId);

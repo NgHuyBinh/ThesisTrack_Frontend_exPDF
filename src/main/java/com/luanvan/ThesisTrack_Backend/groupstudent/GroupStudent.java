@@ -1,16 +1,15 @@
 package com.luanvan.ThesisTrack_Backend.groupstudent;
 
+import com.luanvan.ThesisTrack_Backend.student.Student;
 import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +22,7 @@ public class GroupStudent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     // mã nhóm sinh viên báo cáo
+    @Column(unique = true)
     private String code;
 
     // // tên nhóm sinh viên báo cáo vd: Thầy Tuấn nhóm 1, nhóm 2,..

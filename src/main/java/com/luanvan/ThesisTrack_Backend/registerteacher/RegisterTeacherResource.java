@@ -46,6 +46,12 @@ public class RegisterTeacherResource {
         registerTeacherService.updateStatus(id, registerTeacher);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
+    @PatchMapping("/update2/{id}")
+    public ResponseEntity<Void> updateStatus2(@PathVariable Integer id,
+                                             @RequestBody RegisterTeacherRequestDTO registerTeacherRequestDTO) {
+        registerTeacherService.updateStatus2(id, registerTeacherRequestDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
     // lấy thông tin sinh viên có có giảng viên hướng dẫn có điều kiện trạng thái đã
     // được duyệt
     @GetMapping("/info")

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface GroupStudentRepository extends JpaRepository <GroupStudent, Integer> {
     List<GroupStudent> findByTeacherId(Integer teacherId);
-
+    
   
 }

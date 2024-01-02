@@ -1,11 +1,5 @@
 package com.luanvan.ThesisTrack_Backend.email;
 
-// import java.time.LocalDate;
-
-// import javax.swing.Spring;
-// import javax.swing.text.html.CSS;
-// import javax.swing.text.html.HTML;
-
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.ResponseEntity;
 // import org.springframework.mail.SimpleMailMessage;
@@ -13,6 +7,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 // import org.springframework.web.bind.annotation.RequestBody;
+
+// import com.luanvan.ThesisTrack_Backend.calender.Calender;
+// import com.luanvan.ThesisTrack_Backend.student.Student;
+// import com.luanvan.ThesisTrack_Backend.teacher.Teacher;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -22,7 +20,7 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
-
+// , Student student, Teacher teacher, Calender calender
     // thông báo lịch báo cáo
     public void sendEmail(Email email, String studentName) {
         MimeMessage message = mailSender.createMimeMessage();

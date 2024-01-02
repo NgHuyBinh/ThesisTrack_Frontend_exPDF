@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/topics")
+@RequestMapping("api/v1/topics")
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201", "http://localhost:4202" })
 public class TopicResource {
 
@@ -42,9 +42,10 @@ public class TopicResource {
     }
     
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatedTopic(@PathVariable Integer id, @RequestBody String name){
-        topicService.updateTopic(id, name);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> updatedTopic(@PathVariable Integer id, @RequestBody Topic topic){
+        topicService.updateTopic(id, topic.getName());
+//        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

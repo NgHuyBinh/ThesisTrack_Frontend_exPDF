@@ -28,7 +28,7 @@ public class EmailResource {
 
     @PostMapping("/mark")
     public ResponseEntity<?> sendMark(@Valid @RequestBody Email email, @RequestParam String studentName) {
-        emailService.sendEmail(email, studentName);
+        emailService.sendMark(email, studentName);
         return ResponseEntity.ok().build();
     }
 
